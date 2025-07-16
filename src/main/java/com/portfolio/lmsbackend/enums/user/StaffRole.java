@@ -1,6 +1,6 @@
 package com.portfolio.lmsbackend.enums.user;
 
-public enum EmployeeRole {
+public enum StaffRole {
     ADMINISTRATOR,
     INSTRUCTOR
 }

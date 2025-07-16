@@ -40,8 +40,8 @@ import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
-import static com.portfolio.lmsbackend.enums.user.EmployeeRole.ADMINISTRATOR;
-import static com.portfolio.lmsbackend.enums.user.EmployeeRole.INSTRUCTOR;
+import static com.portfolio.lmsbackend.enums.user.StaffRole.ADMINISTRATOR;
+import static com.portfolio.lmsbackend.enums.user.StaffRole.INSTRUCTOR;
 import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
