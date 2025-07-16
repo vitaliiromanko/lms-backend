@@ -11,6 +11,8 @@ import org.springframework.security.access.expression.method.DefaultMethodSecuri
 import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -57,12 +59,18 @@ public class SecurityConfig {
     private String privateKeyString;
 
     @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+        return config.getAuthenticationManager();
+    }
+
+    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain generalSecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain generalSecurityFilterChain(HttpSecurity http,
+                                                          CustomJwtAuthenticationConverter converter) throws Exception {
         http
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -82,7 +90,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(STATELESS)
                 )
                 .oauth2ResourceServer(c -> c
-                        .jwt(withDefaults())
+                        .jwt(jc -> jc.jwtAuthenticationConverter(converter))
                 )
                 .exceptionHandling(c -> c
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
