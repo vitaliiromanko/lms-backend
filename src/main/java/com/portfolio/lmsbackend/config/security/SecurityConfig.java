@@ -69,8 +69,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain generalSecurityFilterChain(HttpSecurity http,
-                                                          CustomJwtAuthenticationConverter converter) throws Exception {
+    public SecurityFilterChain generalSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
@@ -90,7 +89,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(STATELESS)
                 )
                 .oauth2ResourceServer(c -> c
-                        .jwt(jc -> jc.jwtAuthenticationConverter(converter))
+                        .jwt(withDefaults())
                 )
                 .exceptionHandling(c -> c
                         .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
