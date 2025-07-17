@@ -1,7 +1,7 @@
 package com.portfolio.lmsbackend;
 
 import com.portfolio.lmsbackend.model.user.Staff;
-import com.portfolio.lmsbackend.repository.user.StaffRepository;
+import com.portfolio.lmsbackend.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
@@ -16,7 +16,7 @@ import static com.portfolio.lmsbackend.enums.user.StaffRole.ADMINISTRATOR;
 @RequiredArgsConstructor
 @Slf4j
 public class DevDataLoader implements CommandLineRunner {
-    private final StaffRepository staffRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -25,13 +25,12 @@ public class DevDataLoader implements CommandLineRunner {
     }
 
     private void defaultAdminInit() {
-        if (staffRepository.count() == 0) {
-            staffRepository.save(new Staff(
+        if (userRepository.count() == 0) {
+            userRepository.save(new Staff(
                     "F_admin",
                     "L_admin",
                     "test-admin@tt.tt",
                     passwordEncoder.encode("testT001"),
-                    "+380123456789",
                     ADMINISTRATOR
             ));
             log.info("Default administrator has been registered successfully");

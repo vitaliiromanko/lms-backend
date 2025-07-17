@@ -26,20 +26,16 @@ public class StaffInvitation extends UserInvitation {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @Column(name = "phone_number", nullable = false, length = 20)
-    private String phoneNumber;
-
     @Enumerated(value = STRING)
     @Column(name = "role", nullable = false)
     private StaffRole role;
 
-    public StaffInvitation(String firstName, String lastName, String email, String phoneNumber,
+    public StaffInvitation(String firstName, String lastName, String email,
                            StaffRole role, Staff invitedBy) {
         super(invitedBy);
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.phoneNumber = phoneNumber;
         this.role = role;
     }
 
@@ -50,7 +46,6 @@ public class StaffInvitation extends UserInvitation {
                 "firstName = " + getFirstName() + ", " +
                 "lastName = " + getLastName() + ", " +
                 "email = " + getEmail() + ", " +
-                "phoneNumber = " + getPhoneNumber() + ", " +
                 "role = " + getRole() + ", " +
                 "invitedBy = " + getInvitedBy() + ", " +
                 "createdAt = " + getCreatedAt() + ", " +

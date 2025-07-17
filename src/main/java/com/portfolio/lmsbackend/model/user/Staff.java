@@ -16,17 +16,12 @@ import static jakarta.persistence.EnumType.STRING;
 @Getter
 @Setter
 public class Staff extends User {
-    @Column(name = "phone_number", nullable = false, unique = true, length = 20)
-    private String phoneNumber;
-
     @Enumerated(value = STRING)
     @Column(name = "role", nullable = false)
     private StaffRole role;
 
-    public Staff(String firstName, String lastName, String email, String password,
-                 String phoneNumber, StaffRole role) {
+    public Staff(String firstName, String lastName, String email, String password, StaffRole role) {
         super(firstName, lastName, email, password, true);
-        this.phoneNumber = phoneNumber;
         this.role = role;
     }
 
@@ -44,7 +39,6 @@ public class Staff extends User {
                 "email = " + getEmail() + ", " +
                 "emailVerified = " + isEmailVerified() + ", " +
                 "photo = " + getPhoto() + ", " +
-                "phoneNumber = " + getPhoneNumber() + ", " +
                 "role = " + getRole() + ", " +
                 "status = " + getStatus() + ", " +
                 "createdAt = " + getCreatedAt() + ", " +
