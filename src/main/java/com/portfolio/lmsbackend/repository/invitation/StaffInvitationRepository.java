@@ -9,6 +9,8 @@ import java.util.UUID;
 
 @Repository
 public interface StaffInvitationRepository extends JpaRepository<StaffInvitation, UUID> {
+    boolean existsByEmail(String email);
+
     @Transactional
     void deleteByEmail(String email);
 }

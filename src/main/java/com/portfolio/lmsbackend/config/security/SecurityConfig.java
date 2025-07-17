@@ -83,6 +83,9 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/swagger-ui.html"
                         ).permitAll()
+                        .requestMatchers(
+                                "/auth/**"
+                        ).permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(c -> c
@@ -160,8 +163,11 @@ public class SecurityConfig {
 
     @Bean
     static RoleHierarchy roleHierarchy() {
+        String generalStaffRole = "STAFF";
         return RoleHierarchyImpl.withDefaultRolePrefix()
                 .role(ADMINISTRATOR.name()).implies(INSTRUCTOR.name())
+                .role(ADMINISTRATOR.name()).implies(generalStaffRole)
+                .role(INSTRUCTOR.name()).implies(generalStaffRole)
                 .build();
     }
 
