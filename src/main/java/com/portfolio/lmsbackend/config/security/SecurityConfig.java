@@ -52,7 +52,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-
     @Value("${application.security.jwt.rsa.public-key}")
     private String publicKeyString;
     @Value("${application.security.jwt.rsa.private-key}")
