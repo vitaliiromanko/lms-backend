@@ -1,0 +1,15 @@
+package com.portfolio.lmsbackend.exception.media;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
+
+@Slf4j
+public class MediaUploadException extends ResponseStatusException {
+    private final static String MESSAGE = "Failed to upload media file";
+
+    public MediaUploadException() {
+        super(HttpStatus.INTERNAL_SERVER_ERROR, MESSAGE);
+        log.warn(MESSAGE);
+    }
+}
