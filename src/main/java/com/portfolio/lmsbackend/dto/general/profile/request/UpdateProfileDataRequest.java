@@ -21,7 +21,7 @@ public abstract class UpdateProfileDataRequest {
     private final String email;
 
     @JsonCreator
-    public UpdateProfileDataRequest(
+    protected UpdateProfileDataRequest(
             @JsonProperty("first_name") String firstName,
             @JsonProperty("last_name") String lastName,
             @JsonProperty("email") String email
