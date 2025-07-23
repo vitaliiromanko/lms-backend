@@ -2,10 +2,17 @@ package com.portfolio.lmsbackend.dto.general.profile.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = UpdateStudentProfileDataRequest.class, name = "STUDENT"),
+        @JsonSubTypes.Type(value = UpdateStaffProfileDataRequest.class, name = "STAFF")
+})
 public abstract class UpdateProfileDataRequest {
     @NotBlank
     @Size(max = 100)

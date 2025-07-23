@@ -3,8 +3,10 @@ package com.portfolio.lmsbackend.service.application.general.impl;
 import com.portfolio.lmsbackend.dto.general.profile.request.*;
 import com.portfolio.lmsbackend.dto.general.profile.response.GetStaffProfileResponse;
 import com.portfolio.lmsbackend.dto.general.profile.response.GetStudentProfileResponse;
+import com.portfolio.lmsbackend.dto.general.profile.response.GetUserProfileResponse;
 import com.portfolio.lmsbackend.exception.user.EmailAlreadyUsedException;
 import com.portfolio.lmsbackend.exception.user.InvalidOldPasswordException;
+import com.portfolio.lmsbackend.exception.user.InvalidUserTypeException;
 import com.portfolio.lmsbackend.model.media.image.UserPhoto;
 import com.portfolio.lmsbackend.model.user.Staff;
 import com.portfolio.lmsbackend.model.user.Student;
@@ -31,14 +33,10 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional(readOnly = true)
-    public GetStaffProfileResponse getStaffProfile(String userId) {
-        return new GetStaffProfileResponse(userServiceHelper.findByIdAndTypeOrThrow(userId, Staff.class));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public GetStudentProfileResponse getStudentProfile(String userId) {
-        return new GetStudentProfileResponse(userServiceHelper.findByIdAndTypeOrThrow(userId, Student.class));
+    public GetUserProfileResponse getProfile(String userId) {
+        User user = userServiceHelper.findByIdAndTypeOrThrow(userId, User.class);
+        return user instanceof Staff ? new GetStaffProfileResponse((Staff) user) :
+                new GetStudentProfileResponse((Student) user);
     }
 
     @Override
@@ -59,26 +57,14 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional
-    public void updateStaffData(String userId, UpdateStaffProfileDataRequest updateProfileDataRequest, String header) {
-        Staff staff = userServiceHelper.findByIdAndTypeOrThrow(userId, Staff.class);
-        UpdateUserResult updateUserResult = updateUserData(staff, updateProfileDataRequest);
+    public void updateData(String userId, UpdateProfileDataRequest updateProfileDataRequest, String header) {
+        User user = userServiceHelper.findByIdAndTypeOrThrow(userId, User.class);
 
-        boolean dataUpdated = updateUserResult.dataUpdated;
-        boolean emailUpdated = updateUserResult.emailUpdated;
-
-        finalizeProfileUpdate(staff, new UpdateUserResult(dataUpdated, emailUpdated), header);
-    }
-
-    @Override
-    @Transactional
-    public void updateStudentData(String userId, UpdateStudentProfileDataRequest updateProfileDataRequest, String header) {
-        Student student = userServiceHelper.findByIdAndTypeOrThrow(userId, Student.class);
-        UpdateUserResult updateUserResult = updateUserData(student, updateProfileDataRequest);
-
-        boolean dataUpdated = updateUserResult.dataUpdated;
-        boolean emailUpdated = updateUserResult.emailUpdated;
-
-        finalizeProfileUpdate(student, new UpdateUserResult(dataUpdated, emailUpdated), header);
+        if (user instanceof Staff) {
+            updateStaffData((Staff) user, cast(updateProfileDataRequest, UpdateStaffProfileDataRequest.class), header);
+        } else {
+            updateStudentData((Student) user, cast(updateProfileDataRequest, UpdateStudentProfileDataRequest.class), header);
+        }
     }
 
     @Override
@@ -91,6 +77,32 @@ public class ProfileServiceImpl implements ProfileService {
 
         user.setPassword(passwordEncoder.encode(updateProfilePasswordRequest.newPassword()));
         userRepository.save(user);
+    }
+
+    private <T extends UpdateProfileDataRequest> T cast(UpdateProfileDataRequest updateProfileDataRequest, Class<T> child) {
+        try {
+            return child.cast(updateProfileDataRequest);
+        } catch (ClassCastException ex) {
+            throw new InvalidUserTypeException();
+        }
+    }
+
+    private void updateStaffData(Staff staff, UpdateStaffProfileDataRequest updateProfileDataRequest, String header) {
+        UpdateUserResult updateUserResult = updateUserData(staff, updateProfileDataRequest);
+
+        boolean dataUpdated = updateUserResult.dataUpdated;
+        boolean emailUpdated = updateUserResult.emailUpdated;
+
+        finalizeProfileUpdate(staff, new UpdateUserResult(dataUpdated, emailUpdated), header);
+    }
+
+    private void updateStudentData(Student student, UpdateStudentProfileDataRequest updateProfileDataRequest, String header) {
+        UpdateUserResult updateUserResult = updateUserData(student, updateProfileDataRequest);
+
+        boolean dataUpdated = updateUserResult.dataUpdated;
+        boolean emailUpdated = updateUserResult.emailUpdated;
+
+        finalizeProfileUpdate(student, new UpdateUserResult(dataUpdated, emailUpdated), header);
     }
 
     private UpdateUserResult updateUserData(User user, UpdateProfileDataRequest updateProfileDataRequest) {
