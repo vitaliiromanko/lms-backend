@@ -1,6 +1,6 @@
 package com.portfolio.lmsbackend.model.user;
 
-import jakarta.persistence.DiscriminatorValue;
+import com.portfolio.lmsbackend.enums.user.UserType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -10,18 +10,17 @@ import lombok.Setter;
 
 @Entity
 @Table(name = "student")
-@DiscriminatorValue("STUDENT")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public class Student extends User {
     public Student(String firstName, String lastName, String email, String password) {
-        super(firstName, lastName, email, password, false);
+        super(UserType.STUDENT, firstName, lastName, email, password, false);
     }
 
     @Override
     protected String getRoleString() {
-        return "STUDENT";
+        return getType().name();
     }
 
     @Override

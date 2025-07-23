@@ -3,6 +3,7 @@ package com.portfolio.lmsbackend.config.security;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.portfolio.lmsbackend.enums.user.UserType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -162,7 +163,7 @@ public class SecurityConfig {
 
     @Bean
     static RoleHierarchy roleHierarchy() {
-        String generalStaffRole = "STAFF";
+        String generalStaffRole = UserType.STAFF.name();
         return RoleHierarchyImpl.withDefaultRolePrefix()
                 .role(ADMINISTRATOR.name()).implies(INSTRUCTOR.name())
                 .role(ADMINISTRATOR.name()).implies(generalStaffRole)

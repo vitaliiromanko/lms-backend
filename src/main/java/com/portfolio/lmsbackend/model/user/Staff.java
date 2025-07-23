@@ -1,7 +1,11 @@
 package com.portfolio.lmsbackend.model.user;
 
 import com.portfolio.lmsbackend.enums.user.StaffRole;
-import jakarta.persistence.*;
+import com.portfolio.lmsbackend.enums.user.UserType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +15,6 @@ import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "staff")
-@DiscriminatorValue("STAFF")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
@@ -21,7 +24,7 @@ public class Staff extends User {
     private StaffRole role;
 
     public Staff(String firstName, String lastName, String email, String password, StaffRole role) {
-        super(firstName, lastName, email, password, true);
+        super(UserType.STAFF, firstName, lastName, email, password, true);
         this.role = role;
     }
 

@@ -1,6 +1,7 @@
 package com.portfolio.lmsbackend.model.user;
 
 import com.portfolio.lmsbackend.enums.user.UserStatus;
+import com.portfolio.lmsbackend.enums.user.UserType;
 import com.portfolio.lmsbackend.model.media.image.UserPhoto;
 import com.portfolio.lmsbackend.model.token.RefreshToken;
 import com.portfolio.lmsbackend.model.token.ResetPasswordToken;
@@ -27,11 +28,15 @@ import static jakarta.persistence.EnumType.STRING;
 @Entity
 @Table(name = "user")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "user_type")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 public abstract class User extends BaseUserEntity implements UserDetails {
+    @Setter(AccessLevel.NONE)
+    @Enumerated(value = STRING)
+    @Column(name = "type", nullable = false)
+    private UserType type;
+
     @Column(name = "first_name", nullable = false, length = 100)
     private String firstName;
 
@@ -67,7 +72,9 @@ public abstract class User extends BaseUserEntity implements UserDetails {
             mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private Set<RefreshToken> refreshTokens = new HashSet<>();
 
-    protected User(String firstName, String lastName, String email, String password, boolean emailVerified) {
+    protected User(UserType type, String firstName, String lastName, String email,
+                   String password, boolean emailVerified) {
+        this.type = type;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
