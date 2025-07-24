@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import static com.portfolio.lmsbackend.service.application.general.UserServiceHelper.unexpectedUserType;
+
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
@@ -34,9 +36,11 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional(readOnly = true)
     public GetUserProfileResponse getProfile(String userId) {
-        User user = userServiceHelper.findByIdAndTypeOrThrow(userId, User.class);
-        return user instanceof Staff ? new GetStaffProfileResponse((Staff) user) :
-                new GetStudentProfileResponse((Student) user);
+        return userServiceHelper.mapUserTo(
+                userServiceHelper.findByIdAndTypeOrThrow(userId, User.class),
+                GetStaffProfileResponse::new,
+                GetStudentProfileResponse::new
+        );
     }
 
     @Override
@@ -59,11 +63,12 @@ public class ProfileServiceImpl implements ProfileService {
     @Transactional
     public void updateData(String userId, UpdateProfileDataRequest updateProfileDataRequest, String header) {
         User user = userServiceHelper.findByIdAndTypeOrThrow(userId, User.class);
-
-        if (user instanceof Staff) {
-            updateStaffData((Staff) user, cast(updateProfileDataRequest, UpdateStaffProfileDataRequest.class), header);
-        } else {
-            updateStudentData((Student) user, cast(updateProfileDataRequest, UpdateStudentProfileDataRequest.class), header);
+        switch (user) {
+            case Staff staff ->
+                    updateStaffData(staff, cast(updateProfileDataRequest, UpdateStaffProfileDataRequest.class), header);
+            case Student student ->
+                    updateStudentData(student, cast(updateProfileDataRequest, UpdateStudentProfileDataRequest.class), header);
+            default -> throw unexpectedUserType(user);
         }
     }
 
