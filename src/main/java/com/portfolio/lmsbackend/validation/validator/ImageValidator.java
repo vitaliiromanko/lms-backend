@@ -43,7 +43,7 @@ public class ImageValidator implements ConstraintValidator<ValidImage, Object> {
         return false;
     }
 
-    public boolean isImageValid(MultipartFile image, ConstraintValidatorContext context) {
+    private boolean isImageValid(MultipartFile image, ConstraintValidatorContext context) {
         if (image.getSize() > maxSize) {
             context.disableDefaultConstraintViolation();
             context.buildConstraintViolationWithTemplate(
