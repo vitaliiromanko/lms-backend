@@ -1,5 +1,6 @@
 package com.portfolio.lmsbackend.model.invitation;
 
+import com.portfolio.lmsbackend.model.BaseEntity;
 import com.portfolio.lmsbackend.model.token.InvitationToken;
 import com.portfolio.lmsbackend.model.user.Staff;
 import jakarta.persistence.*;
@@ -20,7 +21,7 @@ import static jakarta.persistence.CascadeType.ALL;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public abstract class UserInvitation extends BaseUserInvitationEntity {
+public abstract class UserInvitation extends BaseEntity {
     @OneToMany(targetEntity = InvitationToken.class,
             mappedBy = "userInvitation", cascade = ALL, orphanRemoval = true)
     private Set<InvitationToken> invitationTokens = new HashSet<>();

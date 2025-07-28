@@ -2,6 +2,7 @@ package com.portfolio.lmsbackend.model.user;
 
 import com.portfolio.lmsbackend.enums.user.UserStatus;
 import com.portfolio.lmsbackend.enums.user.UserType;
+import com.portfolio.lmsbackend.model.BaseEntity;
 import com.portfolio.lmsbackend.model.media.image.UserPhoto;
 import com.portfolio.lmsbackend.model.token.RefreshToken;
 import com.portfolio.lmsbackend.model.token.ResetPasswordToken;
@@ -31,7 +32,7 @@ import static jakarta.persistence.EnumType.STRING;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public abstract class User extends BaseUserEntity implements UserDetails {
+public abstract class User extends BaseEntity implements UserDetails {
     @Setter(AccessLevel.NONE)
     @Enumerated(value = STRING)
     @Column(name = "type", nullable = false)

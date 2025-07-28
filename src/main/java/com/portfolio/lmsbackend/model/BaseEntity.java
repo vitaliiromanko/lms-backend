@@ -1,4 +1,4 @@
-package com.portfolio.lmsbackend.model.user;
+package com.portfolio.lmsbackend.model;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public abstract class BaseUserEntity {
+public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false, updatable = false)
@@ -38,7 +38,7 @@ public abstract class BaseUserEntity {
         Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o).getHibernateLazyInitializer().getPersistentClass() : o.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        BaseUserEntity that = (BaseUserEntity) o;
+        BaseEntity that = (BaseEntity) o;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 
