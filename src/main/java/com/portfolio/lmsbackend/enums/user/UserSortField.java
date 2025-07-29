@@ -1,8 +1,10 @@
 package com.portfolio.lmsbackend.enums.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum UserSortField {
     TYPE("type"),
     FIRST_NAME("firstName"),
@@ -15,8 +17,4 @@ public enum UserSortField {
     UPDATED_AT("updatedAt");
 
     private final String field;
-
-    UserSortField(String field) {
-        this.field = field;
-    }
 }
