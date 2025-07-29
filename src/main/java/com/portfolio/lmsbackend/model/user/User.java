@@ -35,7 +35,7 @@ import static jakarta.persistence.EnumType.STRING;
 public abstract class User extends BaseEntity implements UserDetails {
     @Setter(AccessLevel.NONE)
     @Enumerated(value = STRING)
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = false, updatable = false)
     private UserType type;
 
     @Column(name = "first_name", nullable = false, length = 100)
