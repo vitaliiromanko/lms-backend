@@ -28,7 +28,7 @@ public abstract class UserInvitation extends BaseEntity {
 
     @Setter(AccessLevel.NONE)
     @ManyToOne
-    @JoinColumn(name = "invited_by", nullable = false, updatable = false)
+    @JoinColumn(name = "invited_by_id", nullable = false, updatable = false)
     private Staff invitedBy;
 
     protected UserInvitation(Staff invitedBy) {
