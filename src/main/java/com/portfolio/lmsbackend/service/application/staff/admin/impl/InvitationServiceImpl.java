@@ -9,7 +9,7 @@ import com.portfolio.lmsbackend.repository.invitation.StaffInvitationRepository;
 import com.portfolio.lmsbackend.repository.user.UserRepository;
 import com.portfolio.lmsbackend.service.application.staff.admin.InvitationService;
 import com.portfolio.lmsbackend.service.application.general.AuthSmtpMailSender;
-import com.portfolio.lmsbackend.service.application.general.UserServiceHelper;
+import com.portfolio.lmsbackend.service.application.helper.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

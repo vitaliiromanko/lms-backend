@@ -21,7 +21,7 @@ import com.portfolio.lmsbackend.security.JwtMethods;
 import com.portfolio.lmsbackend.security.JwtPair;
 import com.portfolio.lmsbackend.service.application.general.AuthService;
 import com.portfolio.lmsbackend.service.application.general.AuthSmtpMailSender;
-import com.portfolio.lmsbackend.service.application.general.UserServiceHelper;
+import com.portfolio.lmsbackend.service.application.helper.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

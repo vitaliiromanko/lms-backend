@@ -14,13 +14,13 @@ import com.portfolio.lmsbackend.model.user.User;
 import com.portfolio.lmsbackend.repository.user.UserRepository;
 import com.portfolio.lmsbackend.service.application.general.ProfileService;
 import com.portfolio.lmsbackend.service.application.general.UserPhotoService;
-import com.portfolio.lmsbackend.service.application.general.UserServiceHelper;
+import com.portfolio.lmsbackend.service.application.helper.UserServiceHelper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.portfolio.lmsbackend.service.application.general.UserServiceHelper.unexpectedUserType;
+import static com.portfolio.lmsbackend.service.application.helper.UserServiceHelper.unexpectedUserType;
 
 @Service
 @RequiredArgsConstructor

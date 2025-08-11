@@ -10,7 +10,7 @@ import com.portfolio.lmsbackend.model.user.User;
 import com.portfolio.lmsbackend.repository.token.RefreshTokenRepository;
 import com.portfolio.lmsbackend.repository.user.AdminUserCriteriaRepository;
 import com.portfolio.lmsbackend.repository.user.UserRepository;
-import com.portfolio.lmsbackend.service.application.general.UserServiceHelper;
+import com.portfolio.lmsbackend.service.application.helper.UserServiceHelper;
 import com.portfolio.lmsbackend.service.application.staff.admin.UserManagementService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

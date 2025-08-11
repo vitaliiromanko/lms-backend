@@ -1,4 +1,4 @@
-package com.portfolio.lmsbackend.service.application.general;
+package com.portfolio.lmsbackend.service.application.helper;
 
 import com.portfolio.lmsbackend.exception.user.UserNotFoundException;
 import com.portfolio.lmsbackend.model.token.VerificationToken;
@@ -6,6 +6,7 @@ import com.portfolio.lmsbackend.model.user.Staff;
 import com.portfolio.lmsbackend.model.user.Student;
 import com.portfolio.lmsbackend.model.user.User;
 import com.portfolio.lmsbackend.repository.user.UserRepository;
+import com.portfolio.lmsbackend.service.application.general.AuthSmtpMailSender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
