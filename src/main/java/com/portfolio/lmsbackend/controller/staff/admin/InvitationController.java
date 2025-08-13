@@ -19,7 +19,7 @@ import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping("/admin/invite")
+@RequestMapping("/invite")
 @PreAuthorize("hasRole('ADMINISTRATOR')")
 @SecurityRequirement(name = "Bearer Authentication")
 @RequiredArgsConstructor

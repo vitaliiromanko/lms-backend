@@ -20,7 +20,7 @@ import static com.portfolio.lmsbackend.utils.StringsHelper.ORIGIN_HEADER;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 
 @RestController
-@RequestMapping("/admin/user-profiles")
+@RequestMapping("/user-profiles/manage")
 @PreAuthorize("hasRole('ADMINISTRATOR')")
 @SecurityRequirement(name = "Bearer Authentication")
 @RequiredArgsConstructor
