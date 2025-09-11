@@ -3,6 +3,8 @@ package com.portfolio.lmsbackend.utils;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.regex.Pattern;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class StringsHelper {
     public static final String USER_NOT_FOUND_MESSAGE = "User not found";
@@ -12,4 +14,7 @@ public final class StringsHelper {
     public static final String SUCCESS_MESSAGE = "Success";
 
     public static final String ORIGIN_HEADER = "Origin";
+
+    public static final Pattern MEDIA_PLACEHOLDER =
+            Pattern.compile("(?<!\\\\)\\[media:(?<type>\\w+):(?<id>\\d+)]");
 }

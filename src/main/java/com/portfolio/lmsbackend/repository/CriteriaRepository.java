@@ -32,7 +32,7 @@ public abstract class CriteriaRepository<T, S extends SearchRequest> {
         CriteriaQuery<T> criteriaQuery = getCriteriaBuilder().createQuery(getEntityClass());
         Root<T> root = criteriaQuery.from(getEntityClass());
 
-        Predicate predicate = getPredicate(root, searchRequest);
+        Predicate predicate = getPredicate(root, criteriaQuery, searchRequest);
         criteriaQuery.where(predicate);
         setOrder(searchRequest, criteriaQuery, root);
 
@@ -43,7 +43,7 @@ public abstract class CriteriaRepository<T, S extends SearchRequest> {
         return new PageImpl<>(typedQuery.getResultList(), pageable, count);
     }
 
-    protected abstract Predicate getPredicate(Root<T> root, S searchRequest);
+    protected abstract Predicate getPredicate(Root<T> root, CriteriaQuery<?> criteriaQuery, S searchRequest);
 
     protected abstract void setOrder(S searchRequest, CriteriaQuery<T> criteriaQuery, Root<T> root);
 
@@ -57,7 +57,7 @@ public abstract class CriteriaRepository<T, S extends SearchRequest> {
     protected long getCount(S searchRequest) {
         CriteriaQuery<Long> countQuery = getCriteriaBuilder().createQuery(Long.class);
         Root<T> countRoot = countQuery.from(getEntityClass());
-        Predicate predicate = getPredicate(countRoot, searchRequest);
+        Predicate predicate = getPredicate(countRoot, countQuery, searchRequest);
         countQuery.select(getCriteriaBuilder().count(countRoot)).where(predicate);
         return getEntityManager().createQuery(countQuery).getSingleResult();
     }
