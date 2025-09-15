@@ -32,7 +32,7 @@ public class ProfileServiceImpl implements ProfileService {
     private final UserServiceHelper userServiceHelper;
     private final PasswordEncoder passwordEncoder;
 
-    public record UpdateUserResult(boolean dataUpdated, boolean emailUpdated) {
+    public record UpdateUserResult(boolean emailUpdated) {
     }
 
     @Override
@@ -97,34 +97,24 @@ public class ProfileServiceImpl implements ProfileService {
     private void updateStaffData(Staff staff, UpdateStaffProfileDataRequest updateProfileDataRequest, String header) {
         UpdateUserResult updateUserResult = updateUserData(staff, updateProfileDataRequest);
 
-        boolean dataUpdated = updateUserResult.dataUpdated;
         boolean emailUpdated = updateUserResult.emailUpdated;
 
-        finalizeProfileUpdate(staff, new UpdateUserResult(dataUpdated, emailUpdated), header);
+        finalizeProfileUpdate(staff, new UpdateUserResult(emailUpdated), header);
     }
 
     private void updateStudentData(Student student, UpdateStudentProfileDataRequest updateProfileDataRequest, String header) {
         UpdateUserResult updateUserResult = updateUserData(student, updateProfileDataRequest);
 
-        boolean dataUpdated = updateUserResult.dataUpdated;
         boolean emailUpdated = updateUserResult.emailUpdated;
 
-        finalizeProfileUpdate(student, new UpdateUserResult(dataUpdated, emailUpdated), header);
+        finalizeProfileUpdate(student, new UpdateUserResult(emailUpdated), header);
     }
 
     private UpdateUserResult updateUserData(User user, UpdateProfileDataRequest updateProfileDataRequest) {
-        boolean dataUpdated = false;
         boolean emailUpdated = false;
 
-        if (!user.getFirstName().equals(updateProfileDataRequest.firstName())) {
-            user.setFirstName(updateProfileDataRequest.firstName());
-            dataUpdated = true;
-        }
-
-        if (!user.getLastName().equals(updateProfileDataRequest.lastName())) {
-            user.setLastName(updateProfileDataRequest.lastName());
-            dataUpdated = true;
-        }
+        user.setFirstName(updateProfileDataRequest.firstName());
+        user.setLastName(updateProfileDataRequest.lastName());
 
         if (!user.getEmail().equals(updateProfileDataRequest.email())) {
             if (userRepository.existsByEmail(updateProfileDataRequest.email())) {
@@ -134,17 +124,16 @@ public class ProfileServiceImpl implements ProfileService {
             user.setEmail(updateProfileDataRequest.email());
             user.setEmailVerified(false);
             user.getVerificationTokens().clear();
-            dataUpdated = true;
             emailUpdated = true;
         }
 
-        return new UpdateUserResult(dataUpdated, emailUpdated);
+        return new UpdateUserResult(emailUpdated);
     }
 
     private void finalizeProfileUpdate(User user, UpdateUserResult updateUserResult, String header) {
         if (updateUserResult.emailUpdated) {
             userServiceHelper.sendVerificationToken(user, header);
-        } else if (updateUserResult.dataUpdated) {
+        } else {
             userRepository.save(user);
         }
     }
