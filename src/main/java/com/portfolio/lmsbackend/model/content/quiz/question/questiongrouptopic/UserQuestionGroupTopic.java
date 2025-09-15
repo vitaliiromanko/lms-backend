@@ -25,8 +25,7 @@ public class UserQuestionGroupTopic extends QuestionGroupTopic {
     private UserQuestionGroupTopic parent;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(targetEntity = UserQuestionGroupTopic.class,
-            mappedBy = "parent", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", cascade = ALL, orphanRemoval = true)
     private Set<UserQuestionGroupTopic> children = new HashSet<>();
 
     public UserQuestionGroupTopic(String title, UserQuestionGroupTopic parent) {

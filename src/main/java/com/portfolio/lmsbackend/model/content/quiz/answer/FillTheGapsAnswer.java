@@ -21,8 +21,7 @@ import static jakarta.persistence.CascadeType.ALL;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class FillTheGapsAnswer extends Answer {
-    @OneToMany(targetEntity = GapAnswerSegment.class,
-            mappedBy = "fillTheGapsAnswer", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fillTheGapsAnswer", cascade = ALL, orphanRemoval = true)
     private Set<GapAnswerSegment> gapAnswerSegments = new HashSet<>();
 
     public FillTheGapsAnswer(Attempt attempt, QuizQuestion quizQuestion, Set<GapAnswerSegment> gapAnswerSegments) {

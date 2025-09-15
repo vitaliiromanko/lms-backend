@@ -61,16 +61,13 @@ public abstract class User extends BaseEntity implements UserDetails {
     @Column(name = "status", nullable = false)
     private UserStatus status = ACTIVE;
 
-    @OneToMany(targetEntity = VerificationToken.class,
-            mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private Set<VerificationToken> verificationTokens = new HashSet<>();
 
-    @OneToMany(targetEntity = ResetPasswordToken.class,
-            mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private Set<ResetPasswordToken> resetPasswordTokens = new HashSet<>();
 
-    @OneToMany(targetEntity = RefreshToken.class,
-            mappedBy = "user", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = ALL, orphanRemoval = true)
     private Set<RefreshToken> refreshTokens = new HashSet<>();
 
     protected User(UserType type, String firstName, String lastName, String email,

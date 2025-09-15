@@ -22,8 +22,7 @@ import static jakarta.persistence.CascadeType.ALL;
 @Getter
 @Setter
 public abstract class UserInvitation extends BaseEntity {
-    @OneToMany(targetEntity = InvitationToken.class,
-            mappedBy = "userInvitation", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userInvitation", cascade = ALL, orphanRemoval = true)
     private Set<InvitationToken> invitationTokens = new HashSet<>();
 
     @Setter(AccessLevel.NONE)

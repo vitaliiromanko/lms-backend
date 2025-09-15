@@ -16,6 +16,6 @@ import java.util.Set;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public abstract class QuestionGroupTopic extends BaseEntity {
-    @OneToMany(targetEntity = QuestionGroup.class, mappedBy = "topic")
+    @OneToMany(mappedBy = "topic")
     private Set<QuestionGroup> questionGroups = new HashSet<>();
 }

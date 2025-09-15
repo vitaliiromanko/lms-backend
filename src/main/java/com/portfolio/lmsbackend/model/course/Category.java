@@ -23,7 +23,7 @@ public class Category extends BaseEntity {
     private String title;
 
     @Setter(AccessLevel.NONE)
-    @OneToMany(targetEntity = Course.class, mappedBy = "category")
+    @OneToMany(mappedBy = "category")
     private Set<Course> courses = new HashSet<>();
 
     public Category(String title) {
