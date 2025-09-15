@@ -12,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -28,7 +30,7 @@ public class CourseManagementController {
             @CurrentSecurityContext(expression = "authentication.name") String userId,
             @Valid @RequestBody CreateAdminCourseRequest createAdminCourseRequest
     ) {
-        courseManagementService.create(userId, createAdminCourseRequest);
+        courseManagementService.create(UUID.fromString(userId), createAdminCourseRequest);
         return ResponseEntity.status(CREATED).body(SUCCESS_MESSAGE);
     }
 
@@ -50,7 +52,7 @@ public class CourseManagementController {
 
     @DeleteMapping("/{courseId}")
     public ResponseEntity<String> delete(
-            @PathVariable String courseId
+            @PathVariable UUID courseId
     ) {
         courseManagementService.delete(courseId);
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);

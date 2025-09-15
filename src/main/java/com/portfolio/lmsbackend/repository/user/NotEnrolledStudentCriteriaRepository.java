@@ -25,7 +25,7 @@ public class NotEnrolledStudentCriteriaRepository extends CriteriaRepository<Stu
     protected Predicate getPredicate(Root<Student> root, CriteriaQuery<?> criteriaQuery, GetNotEnrolledStudentsByCourseRequest searchRequest) {
         List<Predicate> predicates = new ArrayList<>();
 
-        addNotEnrolledPredicate(root, criteriaQuery, predicates, UUID.fromString(searchRequest.courseId()));
+        addNotEnrolledPredicate(root, criteriaQuery, predicates, searchRequest.courseId());
 
         if (Objects.nonNull(searchRequest.search())) {
             addSearchPredicate(root, getCriteriaBuilder(), predicates, searchRequest.search());

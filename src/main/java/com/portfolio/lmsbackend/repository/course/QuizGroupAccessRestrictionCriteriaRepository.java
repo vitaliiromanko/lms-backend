@@ -25,7 +25,7 @@ public class QuizGroupAccessRestrictionCriteriaRepository extends CriteriaReposi
     protected Predicate getPredicate(Root<QuizGroupAccessRestriction> root, CriteriaQuery<?> criteriaQuery, GetQuizGroupAccessRestrictionsRequest searchRequest) {
         List<Predicate> predicates = new ArrayList<>();
 
-        addGroupPredicate(root, predicates, UUID.fromString(searchRequest.groupId()));
+        addGroupPredicate(root, predicates, searchRequest.groupId());
 
         if (Objects.nonNull(searchRequest.search())) {
             Join<QuizGroupAccessRestriction, Student> joinStudent = getOrCreateJoinStudent(root);

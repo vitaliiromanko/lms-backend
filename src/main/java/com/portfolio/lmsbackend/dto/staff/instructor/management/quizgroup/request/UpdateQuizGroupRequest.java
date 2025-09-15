@@ -3,14 +3,15 @@ package com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.reque
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.portfolio.lmsbackend.validation.annotation.NonNegativeDuration;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.Duration;
+import java.util.UUID;
 
 public record UpdateQuizGroupRequest(
-        @NotBlank
+        @NotNull
         @JsonProperty("group_id")
-        String groupId,
+        UUID groupId,
         @NonNegativeDuration
         @JsonProperty("duration")
         Duration duration,

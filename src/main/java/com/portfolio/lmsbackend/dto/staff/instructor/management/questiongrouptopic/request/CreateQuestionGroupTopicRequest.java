@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public record CreateQuestionGroupTopicRequest(
         @NotBlank
         @Size(max = 100)
         @JsonProperty("title")
         String title,
         @JsonProperty("parent_id")
-        String parentId
+        UUID parentId
 ) {
 }

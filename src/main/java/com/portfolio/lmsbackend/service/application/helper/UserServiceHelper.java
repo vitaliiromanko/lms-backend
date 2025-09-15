@@ -20,15 +20,15 @@ public class UserServiceHelper {
     private final UserRepository userRepository;
     private final AuthSmtpMailSender authSmtpMailSender;
 
-    public User findByIdOrThrow(String id) {
-        return getOrThrow(userRepository.findById(UUID.fromString(id)));
+    public User findByIdOrThrow(UUID id) {
+        return getOrThrow(userRepository.findById(id));
     }
 
     public User findByEmailOrThrow(String email) {
         return getOrThrow(userRepository.findByEmail(email));
     }
 
-    public <T extends User> T findByIdAndTypeOrThrow(String id, Class<T> type) {
+    public <T extends User> T findByIdAndTypeOrThrow(UUID id, Class<T> type) {
         return castUser(findByIdOrThrow(id), type);
     }
 

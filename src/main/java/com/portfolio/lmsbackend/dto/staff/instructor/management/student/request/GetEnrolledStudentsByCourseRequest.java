@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.portfolio.lmsbackend.enums.user.EnrolledStudentSortField;
 import org.springframework.data.domain.Sort;
 
+import java.util.UUID;
+
 public class GetEnrolledStudentsByCourseRequest extends GetStudentsByCourseRequest {
     private final EnrolledStudentSortField sortField;
 
@@ -15,7 +17,7 @@ public class GetEnrolledStudentsByCourseRequest extends GetStudentsByCourseReque
             @JsonProperty("sort_field") EnrolledStudentSortField sortField,
             @JsonProperty("sort_direction") Sort.Direction sortDirection,
             @JsonProperty("search") String search,
-            @JsonProperty("course_id") String courseId
+            @JsonProperty("course_id") UUID courseId
     ) {
         super(pageNumber, pageSize, sortDirection, search, courseId);
         this.sortField = sortField != null ? sortField : EnrolledStudentSortField.ENROLLED_AT;

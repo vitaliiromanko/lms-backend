@@ -5,6 +5,8 @@ import com.portfolio.lmsbackend.dto.staff.instructor.management.section.request.
 import com.portfolio.lmsbackend.dto.staff.instructor.management.section.request.UpdateSectionRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.section.request.UpdateSectionStatusRequest;
 
+import java.util.UUID;
+
 public interface SectionManagementService {
     void create(CreateSectionRequest createSectionRequest);
 
@@ -14,5 +16,5 @@ public interface SectionManagementService {
 
     void updateStatus(UpdateSectionStatusRequest updateSectionStatusRequest);
 
-    void delete(String sectionId);
+    void delete(UUID sectionId);
 }

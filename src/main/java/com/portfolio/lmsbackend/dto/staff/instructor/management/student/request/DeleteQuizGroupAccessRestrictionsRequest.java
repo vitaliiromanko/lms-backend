@@ -1,17 +1,18 @@
 package com.portfolio.lmsbackend.dto.staff.instructor.management.student.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
+import java.util.UUID;
 
 public record DeleteQuizGroupAccessRestrictionsRequest(
-        @NotBlank
+        @NotNull
         @JsonProperty("group_id")
-        String groupId,
+        UUID groupId,
         @NotEmpty
         @JsonProperty("student_ids")
-        Set<@NotBlank String> studentIds
+        Set<@NotNull UUID> studentIds
 ) {
 }

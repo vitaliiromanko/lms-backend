@@ -2,15 +2,17 @@ package com.portfolio.lmsbackend.dto.staff.instructor.management.question.reques
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+import java.util.UUID;
 
 public class CreateQuestionForExistingGroupRequest extends CreateQuestionRequest {
-    @NotBlank
-    private final String groupId;
+    @NotNull
+    private final UUID groupId;
 
     @JsonCreator
     public CreateQuestionForExistingGroupRequest(
-            @JsonProperty("group_id") String groupId,
+            @JsonProperty("group_id") UUID groupId,
             @JsonProperty("new_question") NewQuestion newQuestion
     ) {
         super(newQuestion);
@@ -18,7 +20,7 @@ public class CreateQuestionForExistingGroupRequest extends CreateQuestionRequest
     }
 
     @JsonProperty("group_id")
-    public String groupId() {
+    public UUID groupId() {
         return groupId;
     }
 }

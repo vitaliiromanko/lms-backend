@@ -17,6 +17,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -44,7 +46,7 @@ public class QuestionGroupTopicManagementController {
     @GetMapping("/{topicId}")
     public ResponseEntity<MappingJacksonValue> getOne(
             @CurrentSecurityContext(expression = "authentication") Authentication authentication,
-            @PathVariable String topicId
+            @PathVariable UUID topicId
     ) {
         GetQuestionGroupTopicResponse response = questionGroupTopicManagementService.getOne(topicId);
         MappingJacksonValue wrapper = new MappingJacksonValue(response);
@@ -77,7 +79,7 @@ public class QuestionGroupTopicManagementController {
 
     @DeleteMapping("/{topicId}")
     public ResponseEntity<String> delete(
-            @PathVariable String topicId
+            @PathVariable UUID topicId
     ) {
         questionGroupTopicManagementService.delete(topicId);
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);

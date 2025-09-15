@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.regex.Matcher;
 
 import static com.portfolio.lmsbackend.utils.StringsHelper.MEDIA_PLACEHOLDER;
@@ -31,7 +32,7 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
 
     @Override
     @Transactional
-    public void create(String userId, CreateQuestionRequest createQuestionRequest, List<MultipartFile> images) {
+    public void create(UUID userId, CreateQuestionRequest createQuestionRequest, List<MultipartFile> images) {
         QuestionGroup group = getQuestionGroup(createQuestionRequest);
         saveQuestion(
                 group,
@@ -74,7 +75,7 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
         ));
     }
 
-    private Question createQuestion(QuestionGroup group, String userId, NewQuestion newQuestion) {
+    private Question createQuestion(QuestionGroup group, UUID userId, NewQuestion newQuestion) {
         Staff createdBy = userServiceHelper.findByIdAndTypeOrThrow(userId, Staff.class);
 
         return switch (newQuestion) {
@@ -104,7 +105,7 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
     }
 
     private FillTheGapsQuestion createFillTheGapsQuestion(QuestionGroup group, Staff createdBy,
-                                               NewFillTheGapsQuestion newFillTheGapsQuestion) {
+                                                          NewFillTheGapsQuestion newFillTheGapsQuestion) {
         return new FillTheGapsQuestion(
                 group,
                 createdBy,
@@ -118,7 +119,7 @@ public class QuestionManagementServiceImpl implements QuestionManagementService 
     }
 
     private TextLongQuestion createTextLongQuestion(QuestionGroup group, Staff createdBy,
-                                             NewTextLongQuestion newTextLongQuestion) {
+                                                    NewTextLongQuestion newTextLongQuestion) {
         return new TextLongQuestion(group, createdBy, newTextLongQuestion.text());
     }
 

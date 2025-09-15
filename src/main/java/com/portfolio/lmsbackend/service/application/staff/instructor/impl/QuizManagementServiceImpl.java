@@ -17,6 +17,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class QuizManagementServiceImpl implements QuizManagementService {
@@ -29,7 +31,7 @@ public class QuizManagementServiceImpl implements QuizManagementService {
 
     @Override
     @Transactional
-    public void create(String userId, CreateQuizRequest createQuizRequest) {
+    public void create(UUID userId, CreateQuizRequest createQuizRequest) {
         Staff createdBy = userServiceHelper.findByIdAndTypeOrThrow(userId, Staff.class);
         switch (createQuizRequest) {
             case CreateQuizForNewGroupRequest createQuizForNewGroupRequest -> createForNewGroup(

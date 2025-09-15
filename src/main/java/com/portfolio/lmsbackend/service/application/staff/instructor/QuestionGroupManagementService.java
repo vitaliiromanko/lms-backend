@@ -4,8 +4,10 @@ import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongroup.re
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongroup.request.UpdateQuestionGroupStatusRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongroup.response.GetQuestionGroupResponse;
 
+import java.util.UUID;
+
 public interface QuestionGroupManagementService {
-    GetQuestionGroupResponse getOne(String groupId);
+    GetQuestionGroupResponse getOne(UUID groupId);
 
     void update(UpdateQuestionGroupRequest updateQuestionGroupRequest);
 

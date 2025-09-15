@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +45,7 @@ public class CategoryManagementServiceImpl implements CategoryManagementService 
 
     @Override
     @Transactional
-    public GetAdminCategoryResponse getOne(String categoryId) {
+    public GetAdminCategoryResponse getOne(UUID categoryId) {
         return new GetAdminCategoryResponse(categoryServiceHelper.findByIdOrThrow(categoryId));
     }
 
@@ -65,7 +66,7 @@ public class CategoryManagementServiceImpl implements CategoryManagementService 
 
     @Override
     @Transactional
-    public void delete(String categoryId) {
+    public void delete(UUID categoryId) {
         Category category = categoryServiceHelper.findByIdOrThrow(categoryId);
 
         if (!category.getCourses().isEmpty()) {

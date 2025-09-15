@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -36,7 +37,7 @@ public class QuestionManagementController {
             @Valid @RequestPart(name = "data") CreateQuestionRequest createQuestionRequest,
             @Valid @RequestPart(name = "images", required = false) List<@ValidImage MultipartFile> images
     ) {
-        questionManagementService.create(userId, createQuestionRequest, images);
+        questionManagementService.create(UUID.fromString(userId), createQuestionRequest, images);
         return ResponseEntity.status(CREATED).body(SUCCESS_MESSAGE);
     }
 }

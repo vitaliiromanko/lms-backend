@@ -5,12 +5,14 @@ import com.portfolio.lmsbackend.dto.general.profile.request.UpdateProfilePasswor
 import com.portfolio.lmsbackend.dto.general.profile.request.UpdateProfilePhotoRequest;
 import com.portfolio.lmsbackend.dto.general.profile.response.GetUserProfileResponse;
 
+import java.util.UUID;
+
 public interface ProfileService {
-    GetUserProfileResponse getProfile(String userId);
+    GetUserProfileResponse getProfile(UUID userId);
 
-    String updatePhoto(String userId, UpdateProfilePhotoRequest updateProfilePhotoRequest);
+    String updatePhoto(UUID userId, UpdateProfilePhotoRequest updateProfilePhotoRequest);
 
-    void updateData(String userId, UpdateProfileDataRequest updateProfileDataRequest, String header);
+    void updateData(UUID userId, UpdateProfileDataRequest updateProfileDataRequest, String header);
 
-    void updatePassword(String userId, UpdateProfilePasswordRequest updateProfilePasswordRequest);
+    void updatePassword(UUID userId, UpdateProfilePasswordRequest updateProfilePasswordRequest);
 }

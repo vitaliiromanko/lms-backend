@@ -10,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class QuizGroupManagementServiceImpl implements QuizGroupManagementService {
@@ -18,7 +20,7 @@ public class QuizGroupManagementServiceImpl implements QuizGroupManagementServic
 
     @Override
     @Transactional
-    public GetQuizGroupResponse getOne(String groupId) {
+    public GetQuizGroupResponse getOne(UUID groupId) {
         return new GetQuizGroupResponse(quizGroupServiceHelper.findByIdOrThrow(groupId));
     }
 

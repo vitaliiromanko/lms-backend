@@ -2,15 +2,18 @@ package com.portfolio.lmsbackend.dto.staff.admin.management.course.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public record UpdateAdminCourseRequest(
-        @NotBlank
+        @NotNull
         @JsonProperty("course_id")
-        String courseId,
-        @NotBlank
+        UUID courseId,
+        @NotNull
         @JsonProperty("category_id")
-        String categoryId,
+        UUID categoryId,
         @NotBlank
         @Size(max = 100)
         @JsonProperty("title")

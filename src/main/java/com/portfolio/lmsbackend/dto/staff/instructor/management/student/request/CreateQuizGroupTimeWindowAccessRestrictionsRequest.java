@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.UUID;
 
 @ValidTimeWindow
 public class CreateQuizGroupTimeWindowAccessRestrictionsRequest extends CreateQuizGroupAccessRestrictionsRequest {
@@ -18,8 +19,8 @@ public class CreateQuizGroupTimeWindowAccessRestrictionsRequest extends CreateQu
 
     @JsonCreator
     public CreateQuizGroupTimeWindowAccessRestrictionsRequest(
-            @JsonProperty("group_id") String groupId,
-            @JsonProperty("student_ids") Set<String> studentIds,
+            @JsonProperty("group_id") UUID groupId,
+            @JsonProperty("student_ids") Set<UUID> studentIds,
             @JsonProperty("available_from") LocalDateTime availableFrom,
             @JsonProperty("available_until") LocalDateTime availableUntil
     ) {

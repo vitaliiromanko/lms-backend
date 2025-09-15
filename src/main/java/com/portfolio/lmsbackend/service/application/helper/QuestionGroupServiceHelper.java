@@ -6,6 +6,8 @@ import com.portfolio.lmsbackend.model.content.quiz.question.QuestionGroup;
 import com.portfolio.lmsbackend.repository.course.QuestionGroupRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.enums.content.quiz.QuestionGroupStatus.ARCHIVED;
 
 @Component
@@ -15,7 +17,7 @@ public class QuestionGroupServiceHelper
         super(repository, QuestionGroupNotFoundException::new);
     }
 
-    public QuestionGroup findByIdAndNotArchivedOrThrow(String id) {
+    public QuestionGroup findByIdAndNotArchivedOrThrow(UUID id) {
         QuestionGroup group = findByIdOrThrow(id);
 
         if (group.getStatus() == ARCHIVED) {

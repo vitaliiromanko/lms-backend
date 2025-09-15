@@ -6,16 +6,18 @@ import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongrouptop
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongrouptopic.response.GetQuestionGroupRootTopicResponse;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongrouptopic.response.GetQuestionGroupTopicResponse;
 
+import java.util.UUID;
+
 public interface QuestionGroupTopicManagementService {
     void create(CreateQuestionGroupTopicRequest createQuestionGroupTopicRequest);
 
     GetQuestionGroupRootTopicResponse getRoot();
 
-    GetQuestionGroupTopicResponse getOne(String topicId);
+    GetQuestionGroupTopicResponse getOne(UUID topicId);
 
     void update(UpdateQuestionGroupTopicRequest updateQuestionGroupTopicRequest);
 
     void updateParent(UpdateQuestionGroupTopicParentRequest updateQuestionGroupTopicParentRequest);
 
-    void delete(String topicId);
+    void delete(UUID topicId);
 }

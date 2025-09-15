@@ -4,7 +4,8 @@ import com.portfolio.lmsbackend.dto.staff.instructor.management.question.request
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface QuestionManagementService {
-    void create(String userId, CreateQuestionRequest createQuestionRequest, List<MultipartFile> images);
+    void create(UUID userId, CreateQuestionRequest createQuestionRequest, List<MultipartFile> images);
 }

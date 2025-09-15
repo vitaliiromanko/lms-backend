@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -69,7 +70,7 @@ public class SectionManagementServiceImpl implements SectionManagementService {
 
     @Override
     @Transactional
-    public void delete(String sectionId) {
+    public void delete(UUID sectionId) {
         sectionServiceHelper.delete(sectionServiceHelper.findByIdOrThrow(sectionId));
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -87,7 +88,7 @@ public class SectionContentManagementServiceImpl implements SectionContentManage
 
     @Override
     @Transactional
-    public void delete(String sectionContentId) {
+    public void delete(UUID sectionContentId) {
         sectionContentServiceHelper.delete(sectionContentServiceHelper.findByIdOrThrow(sectionContentId));
     }
 }

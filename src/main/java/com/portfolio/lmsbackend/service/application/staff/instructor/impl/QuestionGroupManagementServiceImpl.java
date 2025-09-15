@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.enums.content.quiz.QuestionGroupStatus.ARCHIVED;
 
 @Service
@@ -23,7 +25,7 @@ public class QuestionGroupManagementServiceImpl implements QuestionGroupManageme
 
     @Override
     @Transactional
-    public GetQuestionGroupResponse getOne(String groupId) {
+    public GetQuestionGroupResponse getOne(UUID groupId) {
         return new GetQuestionGroupResponse(questionGroupServiceHelper.findByIdAndNotArchivedOrThrow(groupId));
     }
 

@@ -2,12 +2,15 @@ package com.portfolio.lmsbackend.dto.staff.instructor.management.questiongroup.r
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public record UpdateQuestionGroupRequest(
-        @NotBlank
+        @NotNull
         @JsonProperty("group_id")
-        String groupId,
+        UUID groupId,
         @NotBlank
         @Size(max = 100)
         @JsonProperty("title")

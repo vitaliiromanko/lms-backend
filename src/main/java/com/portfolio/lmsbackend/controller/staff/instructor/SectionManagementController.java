@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -57,7 +59,7 @@ public class SectionManagementController {
 
     @DeleteMapping("/{sectionId}")
     public ResponseEntity<String> delete(
-            @PathVariable String sectionId
+            @PathVariable UUID sectionId
     ) {
         sectionManagementService.delete(sectionId);
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);

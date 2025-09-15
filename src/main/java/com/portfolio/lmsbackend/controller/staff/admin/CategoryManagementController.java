@@ -13,6 +13,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
@@ -40,7 +41,7 @@ public class CategoryManagementController {
 
     @GetMapping("/{categoryId}")
     public ResponseEntity<GetAdminCategoryResponse> getOne(
-            @PathVariable String categoryId
+            @PathVariable UUID categoryId
     ) {
         return ResponseEntity.ok().body(categoryManagementService.getOne(categoryId));
     }
@@ -55,7 +56,7 @@ public class CategoryManagementController {
 
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<String> delete(
-            @PathVariable String categoryId
+            @PathVariable UUID categoryId
     ) {
         categoryManagementService.delete(categoryId);
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);

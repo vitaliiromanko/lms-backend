@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CourseManagementServiceImpl implements CourseManagementService {
@@ -25,7 +27,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
     private final UserServiceHelper userServiceHelper;
 
     @Override
-    public void create(String userId, CreateAdminCourseRequest createAdminCourseRequest) {
+    public void create(UUID userId, CreateAdminCourseRequest createAdminCourseRequest) {
         if (courseRepository.existsByTitle(createAdminCourseRequest.title())) {
             throw new CourseAlreadyExistsException();
         }
@@ -65,7 +67,7 @@ public class CourseManagementServiceImpl implements CourseManagementService {
 
     @Override
     @Transactional
-    public void delete(String courseId) {
+    public void delete(UUID courseId) {
         courseServiceHelper.delete(courseServiceHelper.findByIdOrThrow(courseId));
     }
 }

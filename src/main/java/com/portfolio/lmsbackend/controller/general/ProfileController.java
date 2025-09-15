@@ -15,6 +15,8 @@ import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.utils.StringsHelper.ORIGIN_HEADER;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 
@@ -30,7 +32,7 @@ public class ProfileController {
     public ResponseEntity<GetUserProfileResponse> getProfile(
             @CurrentSecurityContext(expression = "authentication.name") String userId
     ) {
-        return ResponseEntity.ok().body(profileService.getProfile(userId));
+        return ResponseEntity.ok().body(profileService.getProfile(UUID.fromString(userId)));
     }
 
     @PutMapping("/update-photo")
@@ -39,7 +41,7 @@ public class ProfileController {
             @Valid @ModelAttribute UpdateProfilePhotoRequest updateProfilePhotoRequest
     ) {
         return ResponseEntity.ok().body(new UpdateProfilePhotoResponse(
-                profileService.updatePhoto(userId, updateProfilePhotoRequest)));
+                profileService.updatePhoto(UUID.fromString(userId), updateProfilePhotoRequest)));
     }
 
     @PutMapping("/update-data")
@@ -48,7 +50,7 @@ public class ProfileController {
             @Valid @RequestBody UpdateProfileDataRequest updateProfileDataRequest,
             HttpServletRequest request
     ) {
-        profileService.updateData(userId, updateProfileDataRequest, request.getHeader(ORIGIN_HEADER));
+        profileService.updateData(UUID.fromString(userId), updateProfileDataRequest, request.getHeader(ORIGIN_HEADER));
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
@@ -57,7 +59,7 @@ public class ProfileController {
             @CurrentSecurityContext(expression = "authentication.name") String userId,
             @Valid @RequestBody UpdateProfilePasswordRequest updateProfilePasswordRequest
     ) {
-        profileService.updatePassword(userId, updateProfilePasswordRequest);
+        profileService.updatePassword(UUID.fromString(userId), updateProfilePasswordRequest);
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 }

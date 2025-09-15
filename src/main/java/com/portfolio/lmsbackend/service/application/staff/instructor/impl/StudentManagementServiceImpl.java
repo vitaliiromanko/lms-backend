@@ -154,10 +154,8 @@ public class StudentManagementServiceImpl implements StudentManagementService {
     @Transactional
     public void deleteQuizGroupAccessRestrictions(DeleteQuizGroupAccessRestrictionsRequest deleteQuizGroupAccessRestrictionsRequest) {
         quizGroupAccessRestrictionRepository.deleteByGroupIdAndStudentIdIn(
-                UUID.fromString(deleteQuizGroupAccessRestrictionsRequest.groupId()),
-                deleteQuizGroupAccessRestrictionsRequest.studentIds().stream()
-                        .map(UUID::fromString)
-                        .collect(Collectors.toSet())
+                deleteQuizGroupAccessRestrictionsRequest.groupId(),
+                deleteQuizGroupAccessRestrictionsRequest.studentIds()
         );
     }
 
@@ -167,7 +165,7 @@ public class StudentManagementServiceImpl implements StudentManagementService {
                 .collect(Collectors.toSet());
     }
 
-    private Set<Student> getStudentsByIds(Set<String> studentIds) {
+    private Set<Student> getStudentsByIds(Set<UUID> studentIds) {
         return studentIds.stream()
                 .map(id -> userServiceHelper.findByIdAndTypeOrThrow(id, Student.class))
                 .collect(Collectors.toSet());

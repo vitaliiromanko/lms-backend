@@ -4,12 +4,14 @@ import com.portfolio.lmsbackend.dto.staff.admin.management.course.request.Create
 import com.portfolio.lmsbackend.dto.staff.admin.management.course.request.UpdateAdminCourseRequest;
 import com.portfolio.lmsbackend.dto.staff.admin.management.course.request.UpdateAdminCourseStatusRequest;
 
+import java.util.UUID;
+
 public interface CourseManagementService {
-    void create(String userId, CreateAdminCourseRequest createAdminCourseRequest);
+    void create(UUID userId, CreateAdminCourseRequest createAdminCourseRequest);
 
     void update(UpdateAdminCourseRequest updateAdminCourseRequest);
 
     void updateStatus(UpdateAdminCourseStatusRequest updateAdminCourseStatusRequest);
 
-    void delete(String courseId);
+    void delete(UUID courseId);
 }

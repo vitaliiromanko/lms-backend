@@ -6,15 +6,16 @@ import com.portfolio.lmsbackend.dto.staff.admin.management.category.response.Get
 import com.portfolio.lmsbackend.dto.staff.admin.management.category.response.GetAdminCategorySummaryResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface CategoryManagementService {
     void create(CreateAdminCategoryRequest createAdminCategoryRequest);
 
     List<GetAdminCategorySummaryResponse> getAll();
 
-    GetAdminCategoryResponse getOne(String categoryId);
+    GetAdminCategoryResponse getOne(UUID categoryId);
 
     void update(UpdateAdminCategoryRequest updateAdminCategoryRequest);
 
-    void delete(String categoryId);
+    void delete(UUID categoryId);
 }

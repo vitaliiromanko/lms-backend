@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -29,7 +31,7 @@ public class QuizManagementController {
             @CurrentSecurityContext(expression = "authentication.name") String userId,
             @Valid @RequestBody CreateQuizRequest createQuizRequest
     ) {
-        quizManagementService.create(userId, createQuizRequest);
+        quizManagementService.create(UUID.fromString(userId), createQuizRequest);
         return ResponseEntity.status(CREATED).body(SUCCESS_MESSAGE);
     }
 }

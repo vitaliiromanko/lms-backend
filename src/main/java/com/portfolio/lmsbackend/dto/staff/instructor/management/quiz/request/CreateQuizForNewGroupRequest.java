@@ -5,13 +5,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.portfolio.lmsbackend.validation.annotation.NonNegativeDuration;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.Duration;
+import java.util.UUID;
 
 public class CreateQuizForNewGroupRequest extends CreateQuizRequest {
-    @NotBlank
-    private final String sectionId;
+    @NotNull
+    private final UUID sectionId;
 
     @NotBlank
     @Size(max = 100)
@@ -25,7 +27,7 @@ public class CreateQuizForNewGroupRequest extends CreateQuizRequest {
 
     @JsonCreator
     public CreateQuizForNewGroupRequest(
-            @JsonProperty("section_id") String sectionId,
+            @JsonProperty("section_id") UUID sectionId,
             @JsonProperty("title") String title,
             @JsonProperty("duration") Duration duration,
             @JsonProperty("max_attempts") Integer maxAttempts,
@@ -39,7 +41,7 @@ public class CreateQuizForNewGroupRequest extends CreateQuizRequest {
     }
 
     @JsonProperty("section_id")
-    public String sectionId() {
+    public UUID sectionId() {
         return sectionId;
     }
 

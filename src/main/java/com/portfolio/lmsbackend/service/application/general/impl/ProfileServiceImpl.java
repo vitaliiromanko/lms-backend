@@ -20,6 +20,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.service.application.helper.UserServiceHelper.unexpectedUserType;
 
 @Service
@@ -35,7 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional(readOnly = true)
-    public GetUserProfileResponse getProfile(String userId) {
+    public GetUserProfileResponse getProfile(UUID userId) {
         return userServiceHelper.mapUserTo(
                 userServiceHelper.findByIdOrThrow(userId),
                 GetStaffProfileResponse::new,
@@ -45,7 +47,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional
-    public String updatePhoto(String userId, UpdateProfilePhotoRequest updateProfilePhotoRequest) {
+    public String updatePhoto(UUID userId, UpdateProfilePhotoRequest updateProfilePhotoRequest) {
         User user = userServiceHelper.findByIdOrThrow(userId);
 
         UserPhoto userPhoto = userPhotoService.saveUserPhoto(
@@ -61,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     @Transactional
-    public void updateData(String userId, UpdateProfileDataRequest updateProfileDataRequest, String header) {
+    public void updateData(UUID userId, UpdateProfileDataRequest updateProfileDataRequest, String header) {
         User user = userServiceHelper.findByIdOrThrow(userId);
         switch (user) {
             case Staff staff ->
@@ -73,7 +75,7 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     @Override
-    public void updatePassword(String userId, UpdateProfilePasswordRequest updateProfilePasswordRequest) {
+    public void updatePassword(UUID userId, UpdateProfilePasswordRequest updateProfilePasswordRequest) {
         User user = userServiceHelper.findByIdOrThrow(userId);
 
         if (!passwordEncoder.matches(updateProfilePasswordRequest.oldPassword(), user.getPassword())) {

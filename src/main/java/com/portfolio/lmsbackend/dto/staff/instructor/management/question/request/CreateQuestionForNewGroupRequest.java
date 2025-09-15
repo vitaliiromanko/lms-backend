@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.UUID;
+
 public class CreateQuestionForNewGroupRequest extends CreateQuestionRequest {
-    private final String topicId;
+    private final UUID topicId;
 
     @NotBlank
     @Size(max = 100)
@@ -14,7 +16,7 @@ public class CreateQuestionForNewGroupRequest extends CreateQuestionRequest {
 
     @JsonCreator
     public CreateQuestionForNewGroupRequest(
-            @JsonProperty("topic_id") String topicId,
+            @JsonProperty("topic_id") UUID topicId,
             @JsonProperty("title") String title,
             @JsonProperty("new_question") NewQuestion newQuestion
     ) {
@@ -24,7 +26,7 @@ public class CreateQuestionForNewGroupRequest extends CreateQuestionRequest {
     }
 
     @JsonProperty("topic_id")
-    public String topicId() {
+    public UUID topicId() {
         return topicId;
     }
 

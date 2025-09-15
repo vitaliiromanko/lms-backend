@@ -8,10 +8,12 @@ import com.portfolio.lmsbackend.dto.staff.admin.management.user.response.GetAdmi
 import com.portfolio.lmsbackend.dto.staff.admin.management.user.response.GetAdminUserSummaryResponse;
 import org.springframework.data.domain.Page;
 
+import java.util.UUID;
+
 public interface UserManagementService {
     Page<GetAdminUserSummaryResponse> getSummaries(GetAdminUserSummaryRequest getAdminUserSummaryRequest);
 
-    GetAdminUserProfileResponse getProfile(String userId);
+    GetAdminUserProfileResponse getProfile(UUID userId);
 
     void updateEmailVerified(UpdateAdminUserEmailVerifiedRequest updateAdminUserEmailVerifiedRequest, String header);
 
@@ -19,5 +21,5 @@ public interface UserManagementService {
 
     void updateStaffRole(UpdateAdminStaffRoleRequest updateAdminStaffRoleRequest);
 
-    void deleteRefreshToken(String tokenId);
+    void deleteRefreshToken(UUID tokenId);
 }

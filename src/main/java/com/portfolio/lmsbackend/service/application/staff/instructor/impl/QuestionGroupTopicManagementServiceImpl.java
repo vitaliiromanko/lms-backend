@@ -20,10 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayDeque;
-import java.util.Comparator;
-import java.util.Deque;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -62,7 +59,7 @@ public class QuestionGroupTopicManagementServiceImpl implements QuestionGroupTop
 
     @Override
     @Transactional
-    public GetQuestionGroupTopicResponse getOne(String topicId) {
+    public GetQuestionGroupTopicResponse getOne(UUID topicId) {
         return new GetQuestionGroupTopicResponse(userQuestionGroupTopicServiceHelper.findByIdOrThrow(topicId));
     }
 
@@ -102,7 +99,7 @@ public class QuestionGroupTopicManagementServiceImpl implements QuestionGroupTop
 
     @Override
     @Transactional
-    public void delete(String topicId) {
+    public void delete(UUID topicId) {
         UserQuestionGroupTopic topic = userQuestionGroupTopicServiceHelper.findByIdOrThrow(topicId);
         archiveHelper.archiveQuestionGroups(topic);
         userQuestionGroupTopicRepository.delete(topic);

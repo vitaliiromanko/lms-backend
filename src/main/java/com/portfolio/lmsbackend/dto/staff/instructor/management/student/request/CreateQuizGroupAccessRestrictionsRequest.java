@@ -4,10 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Set;
+import java.util.UUID;
 
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
 @JsonSubTypes({
@@ -15,28 +16,28 @@ import java.util.Set;
         @JsonSubTypes.Type(value = CreateQuizGroupTimeWindowAccessRestrictionsRequest.class, name = "TIME_WINDOW")
 })
 public abstract class CreateQuizGroupAccessRestrictionsRequest {
-    @NotBlank
-    private final String groupId;
+    @NotNull
+    private final UUID groupId;
 
     @NotEmpty
-    private final Set<@NotBlank String> studentIds;
+    private final Set<@NotNull UUID> studentIds;
 
     @JsonCreator
     protected CreateQuizGroupAccessRestrictionsRequest(
-            @JsonProperty("group_id") String groupId,
-            @JsonProperty("student_ids") Set<String> studentIds
+            @JsonProperty("group_id") UUID groupId,
+            @JsonProperty("student_ids") Set<UUID> studentIds
     ) {
         this.groupId = groupId;
         this.studentIds = studentIds;
     }
 
     @JsonProperty("group_id")
-    public String groupId() {
+    public UUID groupId() {
         return groupId;
     }
 
     @JsonProperty("student_ids")
-    public Set<String> studentIds() {
+    public Set<UUID> studentIds() {
         return studentIds;
     }
 }

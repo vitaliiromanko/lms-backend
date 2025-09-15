@@ -13,8 +13,8 @@ public abstract class BaseServiceHelper<T, R extends JpaRepository<T, UUID>, E1 
     protected final R repository;
     private final Supplier<E1> exceptionSupplier1;
 
-    public T findByIdOrThrow(String id) {
-        return repository.findById(UUID.fromString(id))
+    public T findByIdOrThrow(UUID id) {
+        return repository.findById(id)
                 .orElseThrow(exceptionSupplier1);
     }
 }

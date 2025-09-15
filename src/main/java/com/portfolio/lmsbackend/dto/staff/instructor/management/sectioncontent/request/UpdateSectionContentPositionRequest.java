@@ -2,13 +2,14 @@ package com.portfolio.lmsbackend.dto.staff.instructor.management.sectioncontent.
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.UUID;
+
 public record UpdateSectionContentPositionRequest(
-        @NotBlank
+        @NotNull
         @JsonProperty("section_content_id")
-        String sectionContentId,
+        UUID sectionContentId,
         @NotNull
         @Min(0)
         @JsonProperty("new_position")

@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.CurrentSecurityContext;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 
 @RestController
@@ -27,7 +29,7 @@ public class QuizGroupManagementController {
     @GetMapping("/{groupId}")
     public ResponseEntity<MappingJacksonValue> getOne(
             @CurrentSecurityContext(expression = "authentication") Authentication authentication,
-            @PathVariable String groupId
+            @PathVariable UUID groupId
     ) {
         GetQuizGroupResponse response = quizGroupManagementService.getOne(groupId);
         MappingJacksonValue wrapper = new MappingJacksonValue(response);

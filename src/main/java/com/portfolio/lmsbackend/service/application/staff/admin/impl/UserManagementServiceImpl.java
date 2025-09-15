@@ -39,7 +39,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     @Transactional
-    public GetAdminUserProfileResponse getProfile(String userId) {
+    public GetAdminUserProfileResponse getProfile(UUID userId) {
         return userServiceHelper.mapUserTo(
                 userServiceHelper.findByIdOrThrow(userId),
                 GetAdminStaffProfileResponse::new,
@@ -76,7 +76,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     }
 
     @Override
-    public void deleteRefreshToken(String tokenId) {
-        refreshTokenRepository.deleteById(UUID.fromString(tokenId));
+    public void deleteRefreshToken(UUID tokenId) {
+        refreshTokenRepository.deleteById(tokenId);
     }
 }

@@ -5,6 +5,8 @@ import com.portfolio.lmsbackend.dto.staff.instructor.management.sectioncontent.r
 import com.portfolio.lmsbackend.dto.staff.instructor.management.sectioncontent.request.UpdateSectionContentSectionRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.sectioncontent.request.UpdateSectionContentStatusRequest;
 
+import java.util.UUID;
+
 public interface SectionContentManagementService {
     void update(UpdateSectionContentRequest updateSectionContentRequest);
 
@@ -14,5 +16,5 @@ public interface SectionContentManagementService {
 
     void updateSection(UpdateSectionContentSectionRequest updateSectionContentSectionRequest);
 
-    void delete(String sectionContentId);
+    void delete(UUID sectionContentId);
 }

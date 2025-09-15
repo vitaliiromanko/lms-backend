@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 import static com.portfolio.lmsbackend.utils.StringsHelper.ORIGIN_HEADER;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 
@@ -36,7 +38,7 @@ public class UserManagementController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<GetAdminUserProfileResponse> getProfile(
-            @PathVariable String userId
+            @PathVariable UUID userId
     ) {
         return ResponseEntity.ok().body(userManagementService.getProfile(userId));
     }
@@ -68,7 +70,7 @@ public class UserManagementController {
 
     @DeleteMapping("/delete-refresh-token/{tokenId}")
     public ResponseEntity<String> deleteRefreshToken(
-            @PathVariable String tokenId
+            @PathVariable UUID tokenId
     ) {
         userManagementService.deleteRefreshToken(tokenId);
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);

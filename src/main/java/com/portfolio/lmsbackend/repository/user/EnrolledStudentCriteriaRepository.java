@@ -26,7 +26,7 @@ public class EnrolledStudentCriteriaRepository extends CriteriaRepository<Course
     protected Predicate getPredicate(Root<CourseStudent> root, CriteriaQuery<?> criteriaQuery, GetEnrolledStudentsByCourseRequest searchRequest) {
         List<Predicate> predicates = new ArrayList<>();
 
-        addEnrolledPredicate(root, predicates, UUID.fromString(searchRequest.courseId()));
+        addEnrolledPredicate(root, predicates, searchRequest.courseId());
 
         if (Objects.nonNull(searchRequest.search())) {
             Join<CourseStudent, Student> joinStudent = getOrCreateJoinStudent(root);
