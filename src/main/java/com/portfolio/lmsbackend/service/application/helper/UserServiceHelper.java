@@ -20,12 +20,16 @@ public class UserServiceHelper {
     private final UserRepository userRepository;
     private final AuthSmtpMailSender authSmtpMailSender;
 
-    public <T extends User> T findByIdAndTypeOrThrow(String id, Class<T> type) {
-        return castOptionalUser(userRepository.findById(UUID.fromString(id)), type);
+    public User findByIdOrThrow(String id) {
+        return getOrThrow(userRepository.findById(UUID.fromString(id)));
     }
 
-    public <T extends User> T findByEmailAndTypeOrThrow(String email, Class<T> type) {
-        return castOptionalUser(userRepository.findByEmail(email), type);
+    public User findByEmailOrThrow(String email) {
+        return getOrThrow(userRepository.findByEmail(email));
+    }
+
+    public <T extends User> T findByIdAndTypeOrThrow(String id, Class<T> type) {
+        return castUser(findByIdOrThrow(id), type);
     }
 
     public void sendVerificationToken(User user, String originUrl) {
@@ -47,10 +51,14 @@ public class UserServiceHelper {
         return new IllegalStateException("Unexpected user type: " + user.getClass().getName());
     }
 
-    private <T extends User> T castOptionalUser(Optional<User> optionalUser, Class<T> type) {
-        return optionalUser
-                .filter(type::isInstance)
-                .map(type::cast)
-                .orElseThrow(UserNotFoundException::new);
+    private User getOrThrow(Optional<User> optionalUser) {
+        return optionalUser.orElseThrow(UserNotFoundException::new);
+    }
+
+    private <T extends User> T castUser(User user, Class<T> type) {
+        if (type.isInstance(user)) {
+            return type.cast(user);
+        }
+        throw new UserNotFoundException();
     }
 }

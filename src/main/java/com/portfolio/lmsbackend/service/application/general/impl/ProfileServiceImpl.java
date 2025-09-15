@@ -37,7 +37,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Transactional(readOnly = true)
     public GetUserProfileResponse getProfile(String userId) {
         return userServiceHelper.mapUserTo(
-                userServiceHelper.findByIdAndTypeOrThrow(userId, User.class),
+                userServiceHelper.findByIdOrThrow(userId),
                 GetStaffProfileResponse::new,
                 GetStudentProfileResponse::new
         );
@@ -46,7 +46,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional
     public String updatePhoto(String userId, UpdateProfilePhotoRequest updateProfilePhotoRequest) {
-        User user = userServiceHelper.findByIdAndTypeOrThrow(userId, User.class);
+        User user = userServiceHelper.findByIdOrThrow(userId);
 
         UserPhoto userPhoto = userPhotoService.saveUserPhoto(
                 updateProfilePhotoRequest.photo(),
@@ -62,7 +62,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional
     public void updateData(String userId, UpdateProfileDataRequest updateProfileDataRequest, String header) {
-        User user = userServiceHelper.findByIdAndTypeOrThrow(userId, User.class);
+        User user = userServiceHelper.findByIdOrThrow(userId);
         switch (user) {
             case Staff staff ->
                     updateStaffData(staff, cast(updateProfileDataRequest, UpdateStaffProfileDataRequest.class), header);
@@ -74,7 +74,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     @Override
     public void updatePassword(String userId, UpdateProfilePasswordRequest updateProfilePasswordRequest) {
-        User user = userServiceHelper.findByIdAndTypeOrThrow(userId, User.class);
+        User user = userServiceHelper.findByIdOrThrow(userId);
 
         if (!passwordEncoder.matches(updateProfilePasswordRequest.oldPassword(), user.getPassword())) {
             throw new InvalidOldPasswordException();

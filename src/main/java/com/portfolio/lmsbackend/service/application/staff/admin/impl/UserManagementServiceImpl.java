@@ -41,7 +41,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Transactional
     public GetAdminUserProfileResponse getProfile(String userId) {
         return userServiceHelper.mapUserTo(
-                userServiceHelper.findByIdAndTypeOrThrow(userId, User.class),
+                userServiceHelper.findByIdOrThrow(userId),
                 GetAdminStaffProfileResponse::new,
                 GetAdminStudentProfileResponse::new
         );
@@ -50,7 +50,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     @Transactional
     public void updateEmailVerified(UpdateAdminUserEmailVerifiedRequest updateAdminUserEmailVerifiedRequest, String header) {
-        User user = userServiceHelper.findByIdAndTypeOrThrow(updateAdminUserEmailVerifiedRequest.userId(), User.class);
+        User user = userServiceHelper.findByIdOrThrow(updateAdminUserEmailVerifiedRequest.userId());
         user.setEmailVerified(updateAdminUserEmailVerifiedRequest.newEmailVerified());
 
         if (updateAdminUserEmailVerifiedRequest.newEmailVerified()) {
@@ -63,7 +63,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     @Override
     public void updateStatus(UpdateAdminUserStatusRequest updateAdminUserStatusRequest) {
-        User user = userServiceHelper.findByIdAndTypeOrThrow(updateAdminUserStatusRequest.userId(), User.class);
+        User user = userServiceHelper.findByIdOrThrow(updateAdminUserStatusRequest.userId());
         user.setStatus(updateAdminUserStatusRequest.newStatus());
         userRepository.save(user);
     }

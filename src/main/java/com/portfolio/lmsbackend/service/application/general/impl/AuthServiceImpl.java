@@ -89,7 +89,7 @@ public class AuthServiceImpl implements AuthService {
     @Transactional
     public void sendNewVerificationToken(NewVerificationTokenRequest newVerificationTokenRequest, String header) {
         userServiceHelper.sendVerificationToken(
-                userServiceHelper.findByEmailAndTypeOrThrow(newVerificationTokenRequest.email(), User.class),
+                userServiceHelper.findByEmailOrThrow(newVerificationTokenRequest.email()),
                 header
         );
     }
@@ -124,7 +124,7 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void sendResetPasswordToken(ForgotPasswordRequest forgotPasswordRequest, String header) {
-        User user = userServiceHelper.findByEmailAndTypeOrThrow(forgotPasswordRequest.email(), User.class);
+        User user = userServiceHelper.findByEmailOrThrow(forgotPasswordRequest.email());
 
         ResetPasswordToken resetPasswordToken = new ResetPasswordToken(user);
         user.getResetPasswordTokens().add(resetPasswordToken);
