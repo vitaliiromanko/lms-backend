@@ -4,7 +4,7 @@ import com.portfolio.lmsbackend.dto.general.auth.request.*;
 import com.portfolio.lmsbackend.dto.general.auth.response.LoginResponse;
 import com.portfolio.lmsbackend.dto.general.auth.response.RefreshResponse;
 import com.portfolio.lmsbackend.dto.general.auth.response.VerifyResponse;
-import com.portfolio.lmsbackend.security.JwtPair;
+import com.portfolio.lmsbackend.security.general.JwtPair;
 import com.portfolio.lmsbackend.service.application.general.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

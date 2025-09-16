@@ -1,4 +1,4 @@
-package com.portfolio.lmsbackend.security;
+package com.portfolio.lmsbackend.security.general;
 
 public record JwtPair(
         String accessToken,

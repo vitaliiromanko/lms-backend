@@ -1,4 +1,4 @@
-package com.portfolio.lmsbackend.security;
+package com.portfolio.lmsbackend.security.general;
 
 import com.portfolio.lmsbackend.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;

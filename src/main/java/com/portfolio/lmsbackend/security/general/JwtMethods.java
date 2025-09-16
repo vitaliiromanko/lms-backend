@@ -1,4 +1,4 @@
-package com.portfolio.lmsbackend.security;
+package com.portfolio.lmsbackend.security.general;
 
 import com.portfolio.lmsbackend.exception.token.InvalidRefreshTokenException;
 import com.portfolio.lmsbackend.exception.user.UserBlockedException;

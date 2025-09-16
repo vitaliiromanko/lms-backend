@@ -1,7 +1,7 @@
 package com.portfolio.lmsbackend.service.application.general;
 
 import com.portfolio.lmsbackend.dto.general.auth.request.*;
-import com.portfolio.lmsbackend.security.JwtPair;
+import com.portfolio.lmsbackend.security.general.JwtPair;
 
 public interface AuthService {
     void registerStaff(StaffRegisterRequest registerRequest);
