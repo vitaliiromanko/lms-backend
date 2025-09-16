@@ -10,6 +10,8 @@ import com.portfolio.lmsbackend.model.user.Student;
 import java.util.Comparator;
 import java.util.List;
 
+import static com.portfolio.lmsbackend.enums.course.CourseStatus.VISIBLE;
+
 public class GetStudentDashboardResponse extends GetDashboardResponse {
     @JsonView(Views.Basic.class)
     private final List<CourseStudentDashboardSummary> enrolledCourses;
@@ -17,6 +19,7 @@ public class GetStudentDashboardResponse extends GetDashboardResponse {
     public GetStudentDashboardResponse(Student student) {
         this(
                 student.getCourseStudents().stream()
+                        .filter(cs -> cs.getCourse().getStatus() == VISIBLE)
                         .map(cs -> new CourseStudentDashboardSummary(cs.getCourse()))
                         .sorted(Comparator.comparing(CourseStudentDashboardSummary::title))
                         .toList()
