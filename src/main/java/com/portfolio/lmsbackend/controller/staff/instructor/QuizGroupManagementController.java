@@ -1,6 +1,5 @@
 package com.portfolio.lmsbackend.controller.staff.instructor;
 
-import com.portfolio.lmsbackend.dto.Views;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.request.UpdateQuizGroupRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.response.GetQuizGroupResponse;
 import com.portfolio.lmsbackend.service.application.staff.instructor.QuizGroupManagementService;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import static com.portfolio.lmsbackend.controller.ControllerViewHelper.wrapResponseWithView;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 
 @RestController
@@ -32,16 +32,7 @@ public class QuizGroupManagementController {
             @PathVariable UUID groupId
     ) {
         GetQuizGroupResponse response = quizGroupManagementService.getOne(groupId);
-        MappingJacksonValue wrapper = new MappingJacksonValue(response);
-
-        wrapper.setSerializationView(
-                authentication.getAuthorities().stream()
-                        .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMINISTRATOR"))
-                        ? Views.Detailed.class
-                        : Views.General.class
-        );
-
-        return ResponseEntity.ok().body(wrapper);
+        return ResponseEntity.ok().body(wrapResponseWithView(response, authentication));
     }
 
     @PutMapping

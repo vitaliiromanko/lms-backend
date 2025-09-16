@@ -1,6 +1,5 @@
 package com.portfolio.lmsbackend.controller.staff.instructor;
 
-import com.portfolio.lmsbackend.dto.Views;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongrouptopic.request.CreateQuestionGroupTopicRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongrouptopic.request.UpdateQuestionGroupTopicParentRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongrouptopic.request.UpdateQuestionGroupTopicRequest;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+import static com.portfolio.lmsbackend.controller.ControllerViewHelper.wrapResponseWithView;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -49,16 +49,7 @@ public class QuestionGroupTopicManagementController {
             @PathVariable UUID topicId
     ) {
         GetQuestionGroupTopicResponse response = questionGroupTopicManagementService.getOne(topicId);
-        MappingJacksonValue wrapper = new MappingJacksonValue(response);
-
-        wrapper.setSerializationView(
-                authentication.getAuthorities().stream()
-                        .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMINISTRATOR"))
-                        ? Views.Detailed.class
-                        : Views.General.class
-        );
-
-        return ResponseEntity.ok().body(wrapper);
+        return ResponseEntity.ok().body(wrapResponseWithView(response, authentication));
     }
 
     @PutMapping
