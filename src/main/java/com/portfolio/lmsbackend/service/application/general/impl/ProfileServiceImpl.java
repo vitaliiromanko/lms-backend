@@ -22,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+import static com.portfolio.lmsbackend.service.application.helper.UserServiceHelper.mapUserTo;
 import static com.portfolio.lmsbackend.service.application.helper.UserServiceHelper.unexpectedUserType;
 
 @Service
@@ -38,7 +39,7 @@ public class ProfileServiceImpl implements ProfileService {
     @Override
     @Transactional(readOnly = true)
     public GetUserProfileResponse getProfile(UUID userId) {
-        return userServiceHelper.mapUserTo(
+        return mapUserTo(
                 userServiceHelper.findByIdOrThrow(userId),
                 GetStaffProfileResponse::new,
                 GetStudentProfileResponse::new

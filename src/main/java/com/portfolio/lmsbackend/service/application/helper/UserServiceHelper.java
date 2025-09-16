@@ -39,7 +39,7 @@ public class UserServiceHelper {
         authSmtpMailSender.sendVerificationMessage(user.getEmail(), verificationToken.getToken(), originUrl);
     }
 
-    public <R> R mapUserTo(User user, Function<Staff, R> staffMapper, Function<Student, R> studentMapper) {
+    public static <R> R mapUserTo(User user, Function<Staff, R> staffMapper, Function<Student, R> studentMapper) {
         return switch (user) {
             case Staff staff -> staffMapper.apply(staff);
             case Student student -> studentMapper.apply(student);

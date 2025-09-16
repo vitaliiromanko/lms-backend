@@ -19,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
+import static com.portfolio.lmsbackend.service.application.helper.UserServiceHelper.mapUserTo;
+
 @Service
 @RequiredArgsConstructor
 public class UserManagementServiceImpl implements UserManagementService {
@@ -30,7 +32,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     public Page<GetAdminUserSummaryResponse> getSummaries(GetAdminUserSummaryRequest getAdminUserSummaryRequest) {
         return criteriaRepository.findByCriteria(getAdminUserSummaryRequest)
-                .map(user -> userServiceHelper.mapUserTo(
+                .map(user -> mapUserTo(
                         user,
                         GetAdminStaffSummaryResponse::new,
                         GetAdminStudentSummaryResponse::new
@@ -40,7 +42,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     @Override
     @Transactional
     public GetAdminUserProfileResponse getProfile(UUID userId) {
-        return userServiceHelper.mapUserTo(
+        return mapUserTo(
                 userServiceHelper.findByIdOrThrow(userId),
                 GetAdminStaffProfileResponse::new,
                 GetAdminStudentProfileResponse::new
