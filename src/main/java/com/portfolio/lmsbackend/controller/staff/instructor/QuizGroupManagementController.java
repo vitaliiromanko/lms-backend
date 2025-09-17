@@ -1,7 +1,7 @@
 package com.portfolio.lmsbackend.controller.staff.instructor;
 
 import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.request.UpdateQuizGroupRequest;
-import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.response.GetQuizGroupResponse;
+import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.response.GetQuizGroupDetailedResponse;
 import com.portfolio.lmsbackend.service.application.staff.instructor.QuizGroupManagementService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
@@ -31,7 +31,7 @@ public class QuizGroupManagementController {
             @CurrentSecurityContext(expression = "authentication") Authentication authentication,
             @PathVariable UUID groupId
     ) {
-        GetQuizGroupResponse response = quizGroupManagementService.getOne(groupId);
+        GetQuizGroupDetailedResponse response = quizGroupManagementService.getOne(groupId);
         return ResponseEntity.ok().body(wrapResponseWithView(response, authentication));
     }
 

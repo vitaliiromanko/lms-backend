@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-public record GetQuizGroupResponse(
+public record GetQuizGroupDetailedResponse(
         @JsonView(Views.General.class)
         @JsonProperty("id")
         UUID id,
@@ -42,7 +42,7 @@ public record GetQuizGroupResponse(
         @JsonProperty("updated_at")
         LocalDateTime updatedAt
 ) {
-    public GetQuizGroupResponse(QuizGroup group) {
+    public GetQuizGroupDetailedResponse(QuizGroup group) {
         this(
                 group.getId(),
                 group.getTitle(),

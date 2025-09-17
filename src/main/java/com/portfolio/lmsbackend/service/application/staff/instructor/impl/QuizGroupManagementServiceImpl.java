@@ -1,7 +1,7 @@
 package com.portfolio.lmsbackend.service.application.staff.instructor.impl;
 
 import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.request.UpdateQuizGroupRequest;
-import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.response.GetQuizGroupResponse;
+import com.portfolio.lmsbackend.dto.staff.instructor.management.quizgroup.response.GetQuizGroupDetailedResponse;
 import com.portfolio.lmsbackend.model.content.quiz.QuizGroup;
 import com.portfolio.lmsbackend.repository.course.QuizGroupRepository;
 import com.portfolio.lmsbackend.service.application.helper.QuizGroupServiceHelper;
@@ -20,8 +20,8 @@ public class QuizGroupManagementServiceImpl implements QuizGroupManagementServic
 
     @Override
     @Transactional
-    public GetQuizGroupResponse getOne(UUID groupId) {
-        return new GetQuizGroupResponse(quizGroupServiceHelper.findByIdOrThrow(groupId));
+    public GetQuizGroupDetailedResponse getOne(UUID groupId) {
+        return new GetQuizGroupDetailedResponse(quizGroupServiceHelper.findByIdOrThrow(groupId));
     }
 
     @Override
