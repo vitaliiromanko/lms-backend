@@ -12,7 +12,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.portfolio.lmsbackend.enums.course.SectionStatus.VISIBLE;
+import static com.portfolio.lmsbackend.enums.course.SectionStatus.HIDDEN;
 import static jakarta.persistence.CascadeType.ALL;
 import static jakarta.persistence.EnumType.STRING;
 
@@ -32,7 +32,7 @@ public class Section extends BaseEntity {
 
     @Enumerated(value = STRING)
     @Column(name = "status", nullable = false)
-    private SectionStatus status = VISIBLE;
+    private SectionStatus status = HIDDEN;
 
     @OneToMany(mappedBy = "section", cascade = ALL, orphanRemoval = true)
     @OrderColumn(name = "position")

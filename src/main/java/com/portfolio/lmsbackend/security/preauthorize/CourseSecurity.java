@@ -4,14 +4,12 @@ import com.portfolio.lmsbackend.repository.course.CourseRepository;
 import com.portfolio.lmsbackend.repository.course.CourseStudentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.portfolio.lmsbackend.enums.course.CourseStatus.VISIBLE;
+import static com.portfolio.lmsbackend.security.preauthorize.SecurityHelper.isStudent;
 
 @Component
 @RequiredArgsConstructor
@@ -20,23 +18,15 @@ public class CourseSecurity {
     private final CourseStudentRepository courseStudentRepository;
 
     public boolean canAccess(Authentication authentication, UUID courseId) {
-        if (!isStudent(authentication)) {
-            return true;
-        }
+        return !isStudent(authentication) || canStudentAccess(authentication, courseId);
+    }
 
+    protected boolean canStudentAccess(Authentication authentication, UUID courseId) {
         if (!isVisible(courseId)) {
             return false;
         }
 
         return isEnrolled(courseId, UUID.fromString(authentication.getName()));
-    }
-
-    public boolean isStudent(Authentication authentication) {
-        Set<String> roles = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .collect(Collectors.toSet());
-
-        return roles.contains("ROLE_STUDENT");
     }
 
     private boolean isVisible(UUID courseId) {

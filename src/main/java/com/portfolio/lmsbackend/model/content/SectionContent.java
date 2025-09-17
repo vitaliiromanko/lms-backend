@@ -10,7 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import static com.portfolio.lmsbackend.enums.content.SectionContentStatus.VISIBLE;
+import static com.portfolio.lmsbackend.enums.content.SectionContentStatus.HIDDEN;
 import static jakarta.persistence.EnumType.STRING;
 
 @Entity
@@ -30,7 +30,7 @@ public abstract class SectionContent extends BaseEntity {
 
     @Enumerated(value = STRING)
     @Column(name = "status", nullable = false)
-    private SectionContentStatus status = VISIBLE;
+    private SectionContentStatus status = HIDDEN;
 
     @ManyToOne
     @JoinColumn(name = "section_id", nullable = false)
