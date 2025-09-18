@@ -21,6 +21,6 @@ public class AttemptServiceHelper extends BaseServiceHelper<Attempt, AttemptRepo
                 .mapToDouble(a -> a.getQuizQuestion().getMaxScore())
                 .sum();
 
-        return maxScore == 0.0 ? 0.0 : (totalScore / maxScore) * 100;
+        return maxScore == 0.0 ? 100.0 : (totalScore / maxScore) * 100;
     }
 }
