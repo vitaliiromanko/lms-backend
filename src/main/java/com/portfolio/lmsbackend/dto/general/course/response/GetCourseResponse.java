@@ -12,6 +12,9 @@ import com.portfolio.lmsbackend.model.course.Section;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
+
+import static com.portfolio.lmsbackend.enums.course.SectionStatus.VISIBLE;
 
 public record GetCourseResponse(
         @JsonView(Views.Basic.class)
@@ -36,17 +39,27 @@ public record GetCourseResponse(
         @JsonProperty("updated_at")
         LocalDateTime updatedAt
 ) {
-    public GetCourseResponse(Course course, List<Section> sections) {
+    public GetCourseResponse(Course course, boolean includeInvisible) {
         this(
                 course.getId(),
                 course.getTitle(),
-                sections.stream()
-                        .map(SectionSummary::new)
-                        .toList(),
+                buildSectionSummaries(course, includeInvisible),
                 course.getStatus(),
                 new CreatedByResponse(course.getCreatedBy()),
                 course.getCreatedAt(),
                 course.getUpdatedAt()
         );
+    }
+
+    private static List<SectionSummary> buildSectionSummaries(Course course, boolean includeInvisible) {
+        Stream<Section> sectionsStream = course.getSections().stream();
+
+        if (!includeInvisible) {
+            sectionsStream = sectionsStream.filter(s -> s.getStatus() == VISIBLE);
+        }
+
+        return sectionsStream
+                .map(s -> new SectionSummary(s, includeInvisible))
+                .toList();
     }
 }

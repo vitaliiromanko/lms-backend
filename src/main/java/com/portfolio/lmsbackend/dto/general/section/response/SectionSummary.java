@@ -9,6 +9,8 @@ import com.portfolio.lmsbackend.model.course.Section;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import static com.portfolio.lmsbackend.enums.content.SectionContentStatus.VISIBLE;
+
 public record SectionSummary(
         @JsonView(Views.Basic.class)
         @JsonProperty("id")
@@ -29,11 +31,15 @@ public record SectionSummary(
         @JsonProperty("updated_at")
         LocalDateTime updatedAt
 ) {
-    public SectionSummary(Section section) {
+    public SectionSummary(Section section, boolean includeInvisible) {
         this(
                 section.getId(),
                 section.getTitle(),
-                section.getContents() == null ? 0 : section.getContents().size(),
+                section.getContents() == null ? 0 : includeInvisible
+                        ? section.getContents().size()
+                        : (int) section.getContents().stream()
+                        .filter(c -> c.getStatus() == VISIBLE)
+                        .count(),
                 section.getStatus(),
                 section.getCreatedAt(),
                 section.getUpdatedAt()

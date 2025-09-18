@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
-import static com.portfolio.lmsbackend.enums.course.SectionStatus.VISIBLE;
 import static com.portfolio.lmsbackend.service.application.helper.UserServiceHelper.unexpectedUserType;
 
 @Service
@@ -31,10 +30,8 @@ public class CourseServiceImpl implements CourseService {
         return new GetCourseResponse(
                 course,
                 switch (user) {
-                    case Staff ignored -> course.getSections();
-                    case Student ignored -> course.getSections().stream()
-                            .filter(s -> s.getStatus() == VISIBLE)
-                            .toList();
+                    case Staff ignored -> true;
+                    case Student ignored -> false;
                     default -> throw unexpectedUserType(user);
                 }
         );

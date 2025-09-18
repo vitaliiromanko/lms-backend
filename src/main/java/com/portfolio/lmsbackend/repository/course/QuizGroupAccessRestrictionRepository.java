@@ -8,11 +8,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface QuizGroupAccessRestrictionRepository
         extends JpaRepository<QuizGroupAccessRestriction, QuizGroupAccessRestrictionId> {
+    Optional<QuizGroupAccessRestriction> findByGroupAndStudent(QuizGroup group, Student student);
+
     void deleteByGroupAndStudentIn(QuizGroup group, Collection<Student> students);
 
     void deleteByGroupIdAndStudentIdIn(UUID groupId, Collection<UUID> studentIds);

@@ -22,4 +22,8 @@ public class SectionContentServiceHelper
         section.getContents().remove(sectionContent);
         sectionRepository.save(section);
     }
+
+    public static IllegalStateException unexpectedSectionContentType(SectionContent sectionContent) {
+        return new IllegalStateException("Unexpected section content type: " + sectionContent.getClass().getName());
+    }
 }
