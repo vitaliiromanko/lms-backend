@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.portfolio.lmsbackend.dto.Views;
 import com.portfolio.lmsbackend.dto.general.quiz.response.AttemptSummary;
+import com.portfolio.lmsbackend.dto.general.quiz.response.GradedAttemptSummary;
+import com.portfolio.lmsbackend.dto.general.quiz.response.PendingGradingAttemptSummary;
+import com.portfolio.lmsbackend.dto.general.quiz.response.StartedAttemptSummary;
 import com.portfolio.lmsbackend.dto.general.sectioncontent.response.GetSectionContentResponse;
 import com.portfolio.lmsbackend.enums.content.SectionContentStatus;
 import com.portfolio.lmsbackend.enums.content.SectionContentType;
@@ -13,7 +16,6 @@ import com.portfolio.lmsbackend.model.content.quiz.QuizGroup;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,8 +34,7 @@ public abstract class GetQuizGroupResponse extends GetSectionContentResponse {
         this.duration = group.getDuration();
         this.maxAttempts = group.getMaxAttempts();
         this.attempts = attempts.stream()
-                .map(AttemptSummary::new)
-                .sorted(Comparator.comparing(AttemptSummary::createdAt))
+                .map(GetQuizGroupResponse::mapToSummary)
                 .toList();
     }
 
@@ -53,6 +54,14 @@ public abstract class GetQuizGroupResponse extends GetSectionContentResponse {
         this.duration = duration;
         this.maxAttempts = maxAttempts;
         this.attempts = attempts;
+    }
+
+    private static AttemptSummary mapToSummary(Attempt attempt) {
+        return switch (attempt.getStatus()) {
+            case STARTED -> new StartedAttemptSummary(attempt);
+            case PENDING_GRADING -> new PendingGradingAttemptSummary(attempt);
+            case GRADED -> new GradedAttemptSummary(attempt);
+        };
     }
 
     @JsonProperty("duration")

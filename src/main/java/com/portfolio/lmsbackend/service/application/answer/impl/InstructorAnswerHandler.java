@@ -10,13 +10,15 @@ import java.util.Set;
 import static com.portfolio.lmsbackend.enums.content.quiz.QuestionType.TEXT_LONG;
 
 @Service
-public class InstructorAnswerHandler implements AnswerHandler {
+public class InstructorAnswerHandler extends AnswerHandler {
+
     @Override
     public Set<QuestionType> getSupportedQuestionTypes() {
         return Set.of(TEXT_LONG);
     }
 
     @Override
-    public void handle(Answer answer) {
+    protected void handleAnswered(Answer answer) {
+        // For manual evaluation
     }
 }

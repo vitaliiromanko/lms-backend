@@ -15,7 +15,7 @@ import org.hibernate.proxy.HibernateProxy;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.PENDING_GRADING;
+import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.NOT_ANSWERED;
 import static jakarta.persistence.EnumType.STRING;
 
 @Entity
@@ -31,14 +31,13 @@ public abstract class Answer {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-    @Setter(AccessLevel.NONE)
     @ManyToOne
     @JoinColumn(name = "attempt_id", nullable = false, updatable = false)
     private Attempt attempt;
 
     @Enumerated(value = STRING)
     @Column(name = "status", nullable = false)
-    private AnswerStatus status = PENDING_GRADING;
+    private AnswerStatus status = NOT_ANSWERED;
 
     @Setter(AccessLevel.NONE)
     @ManyToOne

@@ -27,11 +27,6 @@ public class FillTheGapsAnswerHandler extends AutoGradingAnswerHandler {
                 .getMissingTextSegments();
         Set<GapAnswerSegment> gapAnswerSegments = ((FillTheGapsAnswer) answer).getGapAnswerSegments();
 
-        if (gapAnswerSegments == null || gapAnswerSegments.isEmpty()) {
-            answer.setScore(getMinScore());
-            return;
-        }
-
         int correctCount = 0;
         int total = missingTextSegments.size();
 

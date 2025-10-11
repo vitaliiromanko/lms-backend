@@ -10,6 +10,7 @@ import jakarta.validation.constraints.AssertTrue;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,7 +21,8 @@ import static com.portfolio.lmsbackend.enums.content.quiz.QuestionType.MULTIPLE_
 @Table(name = "multiple_choice_answer")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class MultipleChoiceAnswer extends Answer {
+@Setter
+public class MultipleChoiceAnswer extends ChoiceAnswer {
     @ManyToMany
     @JoinTable(
             name = "multiple_choice_selected_option",
@@ -30,9 +32,8 @@ public class MultipleChoiceAnswer extends Answer {
     private Set<ChoiceOption> selectedOptions = new HashSet<>();
 
 
-    public MultipleChoiceAnswer(Attempt attempt, QuizQuestion quizQuestion, Set<ChoiceOption> selectedOptions) {
+    public MultipleChoiceAnswer(Attempt attempt, QuizQuestion quizQuestion) {
         super(attempt, quizQuestion);
-        this.selectedOptions = selectedOptions;
     }
 
     @Override
@@ -60,6 +61,7 @@ public class MultipleChoiceAnswer extends Answer {
                 "attempt = " + getAttempt() + ", " +
                 "status = " + getStatus() + ", " +
                 "quizQuestion = " + getQuizQuestion() + ", " +
+                "shuffleSeed = " + getShuffleSeed() + ", " +
                 "score = " + getScore() + ")";
     }
 }

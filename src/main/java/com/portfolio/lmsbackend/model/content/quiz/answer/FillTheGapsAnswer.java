@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,15 +21,13 @@ import static jakarta.persistence.CascadeType.ALL;
 @Table(name = "fill_the_gaps_answer")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 public class FillTheGapsAnswer extends Answer {
     @OneToMany(mappedBy = "fillTheGapsAnswer", cascade = ALL, orphanRemoval = true)
     private Set<GapAnswerSegment> gapAnswerSegments = new HashSet<>();
 
-    public FillTheGapsAnswer(Attempt attempt, QuizQuestion quizQuestion, Set<GapAnswerSegment> gapAnswerSegments) {
+    public FillTheGapsAnswer(Attempt attempt, QuizQuestion quizQuestion) {
         super(attempt, quizQuestion);
-
-        gapAnswerSegments.forEach(t -> t.setFillTheGapsAnswer(this));
-        this.gapAnswerSegments = gapAnswerSegments;
     }
 
     @Override

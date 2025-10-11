@@ -5,8 +5,30 @@ import com.portfolio.lmsbackend.model.content.quiz.answer.Answer;
 
 import java.util.Set;
 
-public interface AnswerHandler {
-    Set<QuestionType> getSupportedQuestionTypes();
+import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.GRADED;
+import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.NOT_ANSWERED;
 
-    void handle(Answer answer);
+public abstract class AnswerHandler {
+    private static final Double DEFAULT_MIN_SCORE = 0.0;
+
+    public abstract Set<QuestionType> getSupportedQuestionTypes();
+
+    public final void handle(Answer answer) {
+        if (answer.getStatus() == NOT_ANSWERED) {
+            answer.setScore(getMinScore());
+            answer.setStatus(GRADED);
+        } else {
+            handleAnswered(answer);
+        }
+    }
+
+    protected abstract void handleAnswered(Answer answer);
+
+    protected final Double getMaxScore(Answer answer) {
+        return answer.getQuizQuestion().getMaxScore();
+    }
+
+    protected final Double getMinScore() {
+        return DEFAULT_MIN_SCORE;
+    }
 }

@@ -63,7 +63,7 @@ public class SectionContentServiceImpl implements SectionContentService {
     }
 
     private List<Attempt> getAttempts(User user, QuizGroup quizGroup) {
-        return attemptRepository.findByQuizInAndUser(quizGroup.getQuizzes(), user);
+        return attemptRepository.findByQuizInAndUserOrderByCreatedAtAsc(quizGroup.getQuizzes(), user);
     }
 
     private QuizGroupAccessRestriction getAccessRestriction(Student student, QuizGroup quizGroup) {

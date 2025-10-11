@@ -23,7 +23,7 @@ public class SingleChoiceAnswerHandler extends AutoGradingAnswerHandler {
         SingleChoiceAnswer singleChoiceAnswer = (SingleChoiceAnswer) answer;
         ChoiceOption selectedOption = singleChoiceAnswer.getSelectedOption();
 
-        if (selectedOption == null || Boolean.FALSE.equals(selectedOption.getCorrect())) {
+        if (Boolean.FALSE.equals(selectedOption.getCorrect())) {
             singleChoiceAnswer.setScore(getMinScore());
         } else {
             singleChoiceAnswer.setScore(getMaxScore(singleChoiceAnswer));

@@ -13,6 +13,7 @@ import jakarta.validation.constraints.AssertTrue;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static com.portfolio.lmsbackend.enums.content.quiz.QuestionType.SINGLE_CHOICE;
 
@@ -20,14 +21,14 @@ import static com.portfolio.lmsbackend.enums.content.quiz.QuestionType.SINGLE_CH
 @Table(name = "single_choice_answer")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class SingleChoiceAnswer extends Answer {
+@Setter
+public class SingleChoiceAnswer extends ChoiceAnswer {
     @ManyToOne
-    @JoinColumn(name = "selected_option_id", updatable = false)
+    @JoinColumn(name = "selected_option_id")
     private ChoiceOption selectedOption;
 
-    public SingleChoiceAnswer(Attempt attempt, QuizQuestion quizQuestion, ChoiceOption selectedOption) {
+    public SingleChoiceAnswer(Attempt attempt, QuizQuestion quizQuestion) {
         super(attempt, quizQuestion);
-        this.selectedOption = selectedOption;
     }
 
     @Override
@@ -57,6 +58,7 @@ public class SingleChoiceAnswer extends Answer {
                 "status = " + getStatus() + ", " +
                 "quizQuestion = " + getQuizQuestion() + ", " +
                 "selectedOption = " + getSelectedOption() + ", " +
+                "shuffleSeed = " + getShuffleSeed() + ", " +
                 "score = " + getScore() + ")";
     }
 }

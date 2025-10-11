@@ -16,6 +16,8 @@ public interface QuizGroupAccessRestrictionRepository
         extends JpaRepository<QuizGroupAccessRestriction, QuizGroupAccessRestrictionId> {
     Optional<QuizGroupAccessRestriction> findByGroupAndStudent(QuizGroup group, Student student);
 
+    Optional<QuizGroupAccessRestriction> findByGroupIdAndStudentId(UUID groupId, UUID studentId);
+
     void deleteByGroupAndStudentIn(QuizGroup group, Collection<Student> students);
 
     void deleteByGroupIdAndStudentIdIn(UUID groupId, Collection<UUID> studentIds);

@@ -10,6 +10,7 @@ import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import static com.portfolio.lmsbackend.enums.content.quiz.QuestionType.TEXT_LONG;
 
@@ -17,14 +18,14 @@ import static com.portfolio.lmsbackend.enums.content.quiz.QuestionType.TEXT_LONG
 @Table(name = "text_long_answer")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+@Setter
 public class TextLongAnswer extends Answer {
     @Lob
-    @Column(name = "text", updatable = false)
+    @Column(name = "text")
     private String text;
 
-    public TextLongAnswer(Attempt attempt, QuizQuestion quizQuestion, String text) {
+    public TextLongAnswer(Attempt attempt, QuizQuestion quizQuestion) {
         super(attempt, quizQuestion);
-        this.text = text;
     }
 
     @Override

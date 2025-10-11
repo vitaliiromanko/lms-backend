@@ -8,9 +8,9 @@ import com.portfolio.lmsbackend.model.content.quiz.question.MultipleChoiceQuesti
 import com.portfolio.lmsbackend.service.application.answer.AutoGradingAnswerHandler;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.portfolio.lmsbackend.enums.content.quiz.QuestionType.MULTIPLE_CHOICE;
 
@@ -23,22 +23,31 @@ public class MultipleChoiceAnswerHandler extends AutoGradingAnswerHandler {
 
     @Override
     protected void grade(Answer answer) {
-        Set<ChoiceOption> correctOptions = ((MultipleChoiceQuestion) answer.getQuizQuestion().getQuestion())
-                .getOptions().stream()
-                .filter(ChoiceOption::getCorrect)
-                .collect(Collectors.toSet());
+        List<ChoiceOption> options = ((MultipleChoiceQuestion) answer.getQuizQuestion().getQuestion())
+                .getOptions();
         Set<ChoiceOption> selectedOptions = ((MultipleChoiceAnswer) answer).getSelectedOptions();
 
-        if (selectedOptions == null || selectedOptions.isEmpty()) {
-            answer.setScore(getMinScore());
-        } else if (selectedOptions.equals(correctOptions)) {
-            answer.setScore(getMaxScore(answer));
-        } else {
-            Set<ChoiceOption> correctlySelected = new HashSet<>(selectedOptions);
-            correctlySelected.retainAll(correctOptions);
+        int totalOptions = options.size();
+        int totalCorrect = getCorrectCount(options);
 
-            double partialScore = ((double) correctlySelected.size() / correctOptions.size()) * getMaxScore(answer);
-            answer.setScore(partialScore);
-        }
+        int selectedCorrect = getCorrectCount(selectedOptions);
+        int selectedIncorrect = selectedOptions.size() - selectedCorrect;
+
+        double score = getMaxScore(answer) * calculateScoreCoefficient(totalOptions, totalCorrect,
+                selectedCorrect, selectedIncorrect);
+        answer.setScore(score);
+    }
+
+    private static int getCorrectCount(Collection<ChoiceOption> options) {
+        return (int) options.stream()
+                .filter(ChoiceOption::getCorrect)
+                .count();
+    }
+
+    private static double calculateScoreCoefficient(int totalOptions, int totalCorrect,
+                                                    int selectedCorrect, int selectedIncorrect) {
+        double tpRatio = (double) selectedCorrect / totalCorrect;
+        double fpRatio = (double) selectedIncorrect / totalOptions;
+        return Math.max(0.0, tpRatio - fpRatio);
     }
 }

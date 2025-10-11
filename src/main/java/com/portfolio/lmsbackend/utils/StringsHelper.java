@@ -17,4 +17,13 @@ public final class StringsHelper {
 
     public static final Pattern MEDIA_PLACEHOLDER =
             Pattern.compile("(?<!\\\\)\\[media:(?<type>\\w+):(?<id>\\d+)]");
+
+    public static final String WS_QUEUE_PREFIX = "/queue";
+    public static final String WS_USER_PREFIX = "/user";
+    public static final String WS_APP_PREFIX = "/app";
+
+    public static final String ERRORS_QUEUE_PREFIX = WS_QUEUE_PREFIX + "/errors";
+    public static final String ATTEMPT_QUEUE_PREFIX = WS_QUEUE_PREFIX + "/attempt";
+    public static final String ATTEMPT_QUEUE_TEMPLATE = ATTEMPT_QUEUE_PREFIX + "/%s";
+    public static final String ATTEMPT_FINISHED_MESSAGE = "Your attempt is finished!";
 }

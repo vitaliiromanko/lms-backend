@@ -2,7 +2,7 @@ package com.portfolio.lmsbackend.model.content.quiz;
 
 import com.portfolio.lmsbackend.enums.content.quiz.AttemptStatus;
 import com.portfolio.lmsbackend.model.BaseEntity;
-import com.portfolio.lmsbackend.model.content.quiz.answer.Answer;
+import com.portfolio.lmsbackend.model.content.quiz.answer.*;
 import com.portfolio.lmsbackend.model.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.AssertTrue;
@@ -13,7 +13,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.portfolio.lmsbackend.enums.content.quiz.AttemptStatus.STARTED;
 import static jakarta.persistence.CascadeType.ALL;
@@ -39,6 +41,7 @@ public class Attempt extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(mappedBy = "attempt", cascade = ALL, orphanRemoval = true)
     @OrderColumn(name = "position")
     private List<Answer> answers = new ArrayList<>();
@@ -53,6 +56,28 @@ public class Attempt extends BaseEntity {
     public Attempt(Quiz quiz, User user) {
         this.quiz = quiz;
         this.user = user;
+        this.answers = createAnswers(quiz);
+    }
+
+    private List<Answer> createAnswers(Quiz quiz) {
+        List<Answer> answers = quiz.getQuizQuestions().stream()
+                .map(this::createAnswer)
+                .collect(Collectors.toList());
+
+        if (Boolean.TRUE.equals(quiz.getShuffleQuestions())) {
+            Collections.shuffle(answers);
+        }
+
+        return answers;
+    }
+
+    private Answer createAnswer(QuizQuestion quizQuestion) {
+        return switch (quizQuestion.getQuestion().getType()) {
+            case SINGLE_CHOICE -> new SingleChoiceAnswer(this, quizQuestion);
+            case MULTIPLE_CHOICE -> new MultipleChoiceAnswer(this, quizQuestion);
+            case FILL_THE_GAPS -> new FillTheGapsAnswer(this, quizQuestion);
+            case TEXT_LONG -> new TextLongAnswer(this, quizQuestion);
+        };
     }
 
     @AssertTrue
