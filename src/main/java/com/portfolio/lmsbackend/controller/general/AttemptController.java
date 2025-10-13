@@ -10,7 +10,6 @@ import com.portfolio.lmsbackend.dto.general.attempt.response.StartAttemptRespons
 import com.portfolio.lmsbackend.service.application.general.AttemptService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +45,8 @@ public class AttemptController {
     @GetMapping("/{attemptId}/answer/{answerPosition}/full")
     @PreAuthorize("@attemptSecurity.canGetAttempt(authentication, #attemptId)")
     public ResponseEntity<GetAttemptResponse> getAttempt(
-            @PathVariable @NotNull UUID attemptId,
-            @PathVariable @NotNull @PositiveOrZero Integer answerPosition
+            @PathVariable UUID attemptId,
+            @PathVariable @PositiveOrZero Integer answerPosition
     ) {
         return ResponseEntity.ok().body(attemptService.getAttempt(attemptId, answerPosition));
     }
@@ -55,8 +54,8 @@ public class AttemptController {
     @GetMapping("/{attemptId}/answer/{answerPosition}")
     @PreAuthorize("@attemptSecurity.canGetAttemptAnswer(authentication, #attemptId)")
     public ResponseEntity<GetAttemptAnswerResponse> getAttemptAnswer(
-            @PathVariable @NotNull UUID attemptId,
-            @PathVariable @NotNull @PositiveOrZero Integer answerPosition
+            @PathVariable UUID attemptId,
+            @PathVariable @PositiveOrZero Integer answerPosition
     ) {
         return ResponseEntity.ok().body(attemptService.getAttemptAnswer(attemptId, answerPosition));
     }
