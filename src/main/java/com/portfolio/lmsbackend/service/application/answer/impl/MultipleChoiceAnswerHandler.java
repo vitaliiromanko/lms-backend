@@ -22,7 +22,7 @@ public class MultipleChoiceAnswerHandler extends AutoGradingAnswerHandler {
     }
 
     @Override
-    protected void grade(Answer answer) {
+    protected double grade(Answer answer) {
         List<ChoiceOption> options = ((MultipleChoiceQuestion) answer.getQuizQuestion().getQuestion())
                 .getOptions();
         Set<ChoiceOption> selectedOptions = ((MultipleChoiceAnswer) answer).getSelectedOptions();
@@ -33,9 +33,8 @@ public class MultipleChoiceAnswerHandler extends AutoGradingAnswerHandler {
         int selectedCorrect = getCorrectCount(selectedOptions);
         int selectedIncorrect = selectedOptions.size() - selectedCorrect;
 
-        double score = getMaxScore(answer) * calculateScoreCoefficient(totalOptions, totalCorrect,
+        return getMaxScore(answer) * calculateScoreCoefficient(totalOptions, totalCorrect,
                 selectedCorrect, selectedIncorrect);
-        answer.setScore(score);
     }
 
     private static int getCorrectCount(Collection<ChoiceOption> options) {

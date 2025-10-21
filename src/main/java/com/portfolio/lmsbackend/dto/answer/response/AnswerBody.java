@@ -1,4 +1,4 @@
-package com.portfolio.lmsbackend.dto.general.attempt.response;
+package com.portfolio.lmsbackend.dto.answer.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,8 +7,6 @@ import com.portfolio.lmsbackend.model.content.quiz.answer.*;
 import com.portfolio.lmsbackend.model.content.quiz.question.ChoiceOption;
 
 import java.util.stream.Collectors;
-
-import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.NOT_ANSWERED;
 
 public abstract class AnswerBody {
     private final QuestionType questionType;
@@ -43,7 +41,7 @@ public abstract class AnswerBody {
     }
 
     private static AnswerContent toUserAnswer(Answer answer) {
-        return answer.getStatus() == NOT_ANSWERED
+        return !answer.getAnswered()
                 ? null
                 : switch (answer.getQuizQuestion().getQuestion().getType()) {
             case SINGLE_CHOICE -> {

@@ -1,6 +1,5 @@
 package com.portfolio.lmsbackend.service.application.general.impl;
 
-import com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus;
 import com.portfolio.lmsbackend.enums.content.quiz.AttemptStatus;
 import com.portfolio.lmsbackend.model.content.quiz.Attempt;
 import com.portfolio.lmsbackend.repository.course.AttemptRepository;
@@ -47,7 +46,7 @@ public class AttemptFinishingServiceImpl implements AttemptFinishingService {
 
         boolean allGraded = attempt.getAnswers()
                 .stream()
-                .allMatch(answer -> answer.getStatus() == AnswerStatus.GRADED);
+                .allMatch(answer -> answer.getScore() != null);
 
         if (allGraded) {
             attempt.setStatus(AttemptStatus.GRADED);

@@ -19,14 +19,14 @@ public class SingleChoiceAnswerHandler extends AutoGradingAnswerHandler {
     }
 
     @Override
-    protected void grade(Answer answer) {
+    protected double grade(Answer answer) {
         SingleChoiceAnswer singleChoiceAnswer = (SingleChoiceAnswer) answer;
         ChoiceOption selectedOption = singleChoiceAnswer.getSelectedOption();
 
         if (Boolean.FALSE.equals(selectedOption.getCorrect())) {
-            singleChoiceAnswer.setScore(getMinScore());
+            return getMinScore();
         } else {
-            singleChoiceAnswer.setScore(getMaxScore(singleChoiceAnswer));
+            return getMaxScore(singleChoiceAnswer);
         }
     }
 }

@@ -38,7 +38,7 @@ public class TextLongAnswer extends Answer {
         return getClass().getSimpleName() + "(" +
                 "id = " + getId() + ", " +
                 "attempt = " + getAttempt() + ", " +
-                "status = " + getStatus() + ", " +
+                "answered = " + getAnswered() + ", " +
                 "quizQuestion = " + getQuizQuestion() + ", " +
                 "text = " + getText() + ", " +
                 "score = " + getScore() + ")";

@@ -22,7 +22,7 @@ public class FillTheGapsAnswerHandler extends AutoGradingAnswerHandler {
     }
 
     @Override
-    protected void grade(Answer answer) {
+    protected double grade(Answer answer) {
         List<MissingTextSegment> missingTextSegments = ((FillTheGapsQuestion) answer.getQuizQuestion().getQuestion())
                 .getMissingTextSegments();
         Set<GapAnswerSegment> gapAnswerSegments = ((FillTheGapsAnswer) answer).getGapAnswerSegments();
@@ -39,7 +39,6 @@ public class FillTheGapsAnswerHandler extends AutoGradingAnswerHandler {
             }
         }
 
-        double finalScore = ((double) correctCount / total) * getMaxScore(answer);
-        answer.setScore(finalScore);
+        return ((double) correctCount / total) * getMaxScore(answer);
     }
 }

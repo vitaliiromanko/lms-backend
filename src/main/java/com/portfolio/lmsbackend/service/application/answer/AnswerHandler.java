@@ -5,20 +5,16 @@ import com.portfolio.lmsbackend.model.content.quiz.answer.Answer;
 
 import java.util.Set;
 
-import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.GRADED;
-import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.NOT_ANSWERED;
-
 public abstract class AnswerHandler {
     private static final Double DEFAULT_MIN_SCORE = 0.0;
 
     public abstract Set<QuestionType> getSupportedQuestionTypes();
 
     public final void handle(Answer answer) {
-        if (answer.getStatus() == NOT_ANSWERED) {
-            answer.setScore(getMinScore());
-            answer.setStatus(GRADED);
-        } else {
+        if (answer.getAnswered()) {
             handleAnswered(answer);
+        } else {
+            answer.setScore(getMinScore());
         }
     }
 

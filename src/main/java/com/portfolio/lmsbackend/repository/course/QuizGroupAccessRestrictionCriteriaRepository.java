@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.portfolio.lmsbackend.repository.CriteriaRepositoryHelper.addSearchPredicate;
+import static com.portfolio.lmsbackend.repository.CriteriaRepositoryHelper.addUserSearchPredicate;
 
 @Repository
 public class QuizGroupAccessRestrictionCriteriaRepository extends CriteriaRepository<QuizGroupAccessRestriction, GetQuizGroupAccessRestrictionsRequest> {
@@ -29,7 +29,7 @@ public class QuizGroupAccessRestrictionCriteriaRepository extends CriteriaReposi
 
         if (Objects.nonNull(searchRequest.search())) {
             Join<QuizGroupAccessRestriction, Student> joinStudent = getOrCreateJoinStudent(root);
-            addSearchPredicate(joinStudent, getCriteriaBuilder(), predicates, searchRequest.search());
+            addUserSearchPredicate(joinStudent, getCriteriaBuilder(), predicates, searchRequest.search());
         }
 
         if (Objects.nonNull(searchRequest.type())) {

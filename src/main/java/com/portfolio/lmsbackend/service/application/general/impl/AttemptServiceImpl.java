@@ -2,7 +2,6 @@ package com.portfolio.lmsbackend.service.application.general.impl;
 
 import com.portfolio.lmsbackend.dto.general.attempt.request.*;
 import com.portfolio.lmsbackend.dto.general.attempt.response.*;
-import com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus;
 import com.portfolio.lmsbackend.enums.content.quiz.AttemptStatus;
 import com.portfolio.lmsbackend.enums.content.quiz.QuestionType;
 import com.portfolio.lmsbackend.exception.InvalidPositionException;
@@ -59,7 +58,7 @@ public class AttemptServiceImpl implements AttemptService {
 
         scheduleAttemptFinishingIfDurationPresent(attempt);
 
-        return new StartAttemptResponse(attempt, getAttemptNumber(attempt));
+        return new StartAttemptResponse(attempt, attemptServiceHelper.getAttemptNumber(attempt));
     }
 
     @Override
@@ -71,10 +70,10 @@ public class AttemptServiceImpl implements AttemptService {
 
         return switch (attempt.getStatus()) {
             case AttemptStatus.STARTED ->
-                    new GetStartedAttemptResponse(attempt, getAttemptNumber(attempt), answerPosition);
+                    new GetStartedAttemptResponse(attempt, attemptServiceHelper.getAttemptNumber(attempt), answerPosition);
             case AttemptStatus.PENDING_GRADING -> throw new AttemptPendingGradingException();
             case AttemptStatus.GRADED ->
-                    new GetGradedAttemptResponse(attempt, getAttemptNumber(attempt), answerPosition);
+                    new GetGradedAttemptResponse(attempt, attemptServiceHelper.getAttemptNumber(attempt), answerPosition);
         };
     }
 
@@ -111,7 +110,7 @@ public class AttemptServiceImpl implements AttemptService {
                     (SubmitTextLongAnswerRequest) submitAnswerRequest);
         }
 
-        answer.setStatus(AnswerStatus.PENDING_GRADING);
+        answer.setAnswered(true);
         answerRepository.save(answer);
     }
 
@@ -127,7 +126,7 @@ public class AttemptServiceImpl implements AttemptService {
             case TEXT_LONG -> resetTextLongAnswer((TextLongAnswer) answer);
         }
 
-        answer.setStatus(AnswerStatus.NOT_ANSWERED);
+        answer.setAnswered(false);
         answerRepository.save(answer);
     }
 
@@ -157,14 +156,6 @@ public class AttemptServiceImpl implements AttemptService {
         return startedAt.plus(duration)
                 .atZone(ZoneId.systemDefault())
                 .toInstant();
-    }
-
-    private Integer getAttemptNumber(Attempt attempt) {
-        return (int) attemptRepository.countAttemptsUpTo(
-                attempt.getUser(),
-                attempt.getQuiz().getGroup(),
-                attempt.getCreatedAt()
-        );
     }
 
     private void checkAnswerPosition(Attempt attempt, Integer answerPosition) {

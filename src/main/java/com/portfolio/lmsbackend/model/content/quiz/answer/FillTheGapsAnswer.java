@@ -40,7 +40,7 @@ public class FillTheGapsAnswer extends Answer {
         return getClass().getSimpleName() + "(" +
                 "id = " + getId() + ", " +
                 "attempt = " + getAttempt() + ", " +
-                "status = " + getStatus() + ", " +
+                "answered = " + getAnswered() + ", " +
                 "quizQuestion = " + getQuizQuestion() + ", " +
                 "score = " + getScore() + ")";
     }

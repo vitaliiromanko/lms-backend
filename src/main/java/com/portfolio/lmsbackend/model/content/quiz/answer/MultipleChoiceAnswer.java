@@ -59,7 +59,7 @@ public class MultipleChoiceAnswer extends ChoiceAnswer {
         return getClass().getSimpleName() + "(" +
                 "id = " + getId() + ", " +
                 "attempt = " + getAttempt() + ", " +
-                "status = " + getStatus() + ", " +
+                "answered = " + getAnswered() + ", " +
                 "quizQuestion = " + getQuizQuestion() + ", " +
                 "shuffleSeed = " + getShuffleSeed() + ", " +
                 "score = " + getScore() + ")";

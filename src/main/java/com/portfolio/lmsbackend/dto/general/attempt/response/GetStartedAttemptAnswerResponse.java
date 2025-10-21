@@ -2,6 +2,7 @@ package com.portfolio.lmsbackend.dto.general.attempt.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.portfolio.lmsbackend.dto.answer.response.AnswerBodyWithoutCorrectAnswer;
 import com.portfolio.lmsbackend.enums.content.quiz.AnswerDtoStatus;
 import com.portfolio.lmsbackend.model.content.quiz.answer.Answer;
 

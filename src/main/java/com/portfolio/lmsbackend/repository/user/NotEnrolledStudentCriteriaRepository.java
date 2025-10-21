@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-import static com.portfolio.lmsbackend.repository.CriteriaRepositoryHelper.addSearchPredicate;
+import static com.portfolio.lmsbackend.repository.CriteriaRepositoryHelper.addUserSearchPredicate;
 
 @Repository
 public class NotEnrolledStudentCriteriaRepository extends CriteriaRepository<Student, GetNotEnrolledStudentsByCourseRequest> {
@@ -28,7 +28,7 @@ public class NotEnrolledStudentCriteriaRepository extends CriteriaRepository<Stu
         addNotEnrolledPredicate(root, criteriaQuery, predicates, searchRequest.courseId());
 
         if (Objects.nonNull(searchRequest.search())) {
-            addSearchPredicate(root, getCriteriaBuilder(), predicates, searchRequest.search());
+            addUserSearchPredicate(root, getCriteriaBuilder(), predicates, searchRequest.search());
         }
 
         return getCriteriaBuilder().and(predicates.toArray(new Predicate[0]));

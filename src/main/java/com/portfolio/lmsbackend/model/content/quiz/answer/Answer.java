@@ -1,6 +1,5 @@
 package com.portfolio.lmsbackend.model.content.quiz.answer;
 
-import com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus;
 import com.portfolio.lmsbackend.enums.content.quiz.QuestionType;
 import com.portfolio.lmsbackend.model.content.quiz.Attempt;
 import com.portfolio.lmsbackend.model.content.quiz.QuizQuestion;
@@ -14,9 +13,6 @@ import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 import java.util.UUID;
-
-import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.NOT_ANSWERED;
-import static jakarta.persistence.EnumType.STRING;
 
 @Entity
 @Table(name = "answer")
@@ -35,9 +31,8 @@ public abstract class Answer {
     @JoinColumn(name = "attempt_id", nullable = false, updatable = false)
     private Attempt attempt;
 
-    @Enumerated(value = STRING)
-    @Column(name = "status", nullable = false)
-    private AnswerStatus status = NOT_ANSWERED;
+    @Column(name = "answered", nullable = false)
+    private Boolean answered = false;
 
     @Setter(AccessLevel.NONE)
     @ManyToOne

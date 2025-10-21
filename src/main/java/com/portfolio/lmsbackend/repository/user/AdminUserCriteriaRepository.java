@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static com.portfolio.lmsbackend.repository.CriteriaRepositoryHelper.addSearchPredicate;
+import static com.portfolio.lmsbackend.repository.CriteriaRepositoryHelper.addUserSearchPredicate;
 
 @Repository
 public class AdminUserCriteriaRepository extends CriteriaRepository<User, GetAdminUserSummaryRequest> {
@@ -27,7 +27,7 @@ public class AdminUserCriteriaRepository extends CriteriaRepository<User, GetAdm
         List<Predicate> predicates = new ArrayList<>();
 
         if (Objects.nonNull(searchRequest.search())) {
-            addSearchPredicate(root, getCriteriaBuilder(), predicates, searchRequest.search());
+            addUserSearchPredicate(root, getCriteriaBuilder(), predicates, searchRequest.search());
         }
 
         if (Objects.nonNull(searchRequest.type())) {

@@ -55,7 +55,7 @@ public class SingleChoiceAnswer extends ChoiceAnswer {
         return getClass().getSimpleName() + "(" +
                 "id = " + getId() + ", " +
                 "attempt = " + getAttempt() + ", " +
-                "status = " + getStatus() + ", " +
+                "answered = " + getAnswered() + ", " +
                 "quizQuestion = " + getQuizQuestion() + ", " +
                 "selectedOption = " + getSelectedOption() + ", " +
                 "shuffleSeed = " + getShuffleSeed() + ", " +

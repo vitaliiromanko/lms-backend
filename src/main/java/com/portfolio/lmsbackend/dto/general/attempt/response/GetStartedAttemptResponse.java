@@ -4,15 +4,13 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.portfolio.lmsbackend.enums.content.quiz.AttemptDtoStatus;
 import com.portfolio.lmsbackend.model.content.quiz.Attempt;
-import com.portfolio.lmsbackend.model.content.quiz.answer.Answer;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.portfolio.lmsbackend.enums.content.quiz.AnswerStatus.NOT_ANSWERED;
 import static com.portfolio.lmsbackend.enums.content.quiz.AttemptDtoStatus.STARTED;
 
 public class GetStartedAttemptResponse extends GetAttemptResponse {
@@ -23,10 +21,7 @@ public class GetStartedAttemptResponse extends GetAttemptResponse {
     public GetStartedAttemptResponse(Attempt attempt, Integer attemptNumber, Integer answerPosition) {
         super(attempt, attemptNumber, STARTED);
 
-        AtomicInteger index = new AtomicInteger(0);
-        this.questionProgressList = attempt.getAnswers().stream()
-                .map(a -> new QuestionProgressForStartedAttempt(index.getAndIncrement(), getAnswered(a)))
-                .toList();
+        this.questionProgressList = getQuestionProgressList(attempt);
 
         Duration duration = attempt.getQuiz().getGroup().getDuration();
         this.expectedFinishTime = duration != null
@@ -53,8 +48,14 @@ public class GetStartedAttemptResponse extends GetAttemptResponse {
         this.currentAnswer = currentAnswer;
     }
 
-    private static Boolean getAnswered(Answer answer) {
-        return answer.getStatus() != NOT_ANSWERED;
+    private static List<QuestionProgressForStartedAttempt> getQuestionProgressList(Attempt attempt) {
+        List<QuestionProgressForStartedAttempt> questionProgressList = new ArrayList<>();
+        for (int i = 0; i < attempt.getAnswers().size(); i++) {
+            questionProgressList.add(
+                    new QuestionProgressForStartedAttempt(i, attempt.getAnswers().get(i).getAnswered())
+            );
+        }
+        return questionProgressList;
     }
 
     @JsonProperty("question_progress_list")

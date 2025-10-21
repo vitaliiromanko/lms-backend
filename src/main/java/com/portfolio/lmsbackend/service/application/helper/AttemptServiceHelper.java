@@ -10,4 +10,12 @@ public class AttemptServiceHelper extends BaseServiceHelper<Attempt, AttemptRepo
     protected AttemptServiceHelper(AttemptRepository repository) {
         super(repository, AttemptNotFoundException::new);
     }
+
+    public Integer getAttemptNumber(Attempt attempt) {
+        return (int) repository.countAttemptsUpTo(
+                attempt.getUser(),
+                attempt.getQuiz().getGroup(),
+                attempt.getCreatedAt()
+        );
+    }
 }

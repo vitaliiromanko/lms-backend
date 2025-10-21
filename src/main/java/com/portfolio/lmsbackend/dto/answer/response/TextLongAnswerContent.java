@@ -1,4 +1,4 @@
-package com.portfolio.lmsbackend.dto.general.attempt.response;
+package com.portfolio.lmsbackend.dto.answer.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

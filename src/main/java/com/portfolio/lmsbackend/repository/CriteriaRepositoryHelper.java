@@ -15,8 +15,8 @@ import java.util.Set;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CriteriaRepositoryHelper {
-    public static void addSearchPredicate(From<?, ? extends User> from, CriteriaBuilder criteriaBuilder,
-                                          List<Predicate> predicates, String search) {
+    public static void addUserSearchPredicate(From<?, ? extends User> from, CriteriaBuilder criteriaBuilder,
+                                              List<Predicate> predicates, String search) {
         List<Predicate> searchPredicates = new ArrayList<>();
 
         Expression<String> idExp = criteriaBuilder.function("BIN_TO_UUID", String.class,
@@ -29,7 +29,7 @@ public class CriteriaRepositoryHelper {
         predicates.add(criteriaBuilder.or(searchPredicates.toArray(new Predicate[0])));
     }
 
-    public static void addSearchFullNamePredicate(From<?, ? extends User> from, CriteriaBuilder criteriaBuilder,
+    private static void addSearchFullNamePredicate(From<?, ? extends User> from, CriteriaBuilder criteriaBuilder,
                                                   List<Predicate> searchPredicates, String search) {
         List<Predicate> searchNamePredicates = new ArrayList<>();
 
