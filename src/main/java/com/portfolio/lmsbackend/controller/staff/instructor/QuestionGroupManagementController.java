@@ -4,7 +4,9 @@ import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongroup.re
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongroup.request.UpdateQuestionGroupStatusRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.questiongroup.response.GetQuestionGroupResponse;
 import com.portfolio.lmsbackend.service.application.staff.instructor.QuestionGroupManagementService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,10 @@ import java.util.UUID;
 import static com.portfolio.lmsbackend.controller.ControllerViewHelper.wrapResponseWithView;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 
+@Tag(
+        name = "Instructor / QuestionGroupManagementController",
+        description = "Endpoints for managing question groups"
+)
 @RestController
 @RequestMapping("/question/group/manage")
 @PreAuthorize("hasRole('INSTRUCTOR')")
@@ -27,6 +33,10 @@ import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 public class QuestionGroupManagementController {
     private final QuestionGroupManagementService questionGroupManagementService;
 
+    @Operation(
+            summary = "Get question group information",
+            description = "Endpoint to retrieve information about a question group."
+    )
     @GetMapping("/{groupId}")
     public ResponseEntity<MappingJacksonValue> getOne(
             @CurrentSecurityContext(expression = "authentication") Authentication authentication,
@@ -36,6 +46,10 @@ public class QuestionGroupManagementController {
         return ResponseEntity.ok().body(wrapResponseWithView(response, authentication));
     }
 
+    @Operation(
+            summary = "Update question group",
+            description = "Endpoint to update information about a question group."
+    )
     @PutMapping
     public ResponseEntity<String> update(
             @Valid @RequestBody UpdateQuestionGroupRequest updateQuestionGroupRequest
@@ -44,6 +58,10 @@ public class QuestionGroupManagementController {
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Update question group status",
+            description = "Endpoint to update question group status."
+    )
     @PutMapping("/status")
     public ResponseEntity<String> updateStatus(
             @Valid @RequestBody UpdateQuestionGroupStatusRequest updateQuestionGroupStatusRequest

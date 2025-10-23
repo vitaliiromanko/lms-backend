@@ -2,7 +2,9 @@ package com.portfolio.lmsbackend.controller.staff.instructor;
 
 import com.portfolio.lmsbackend.dto.staff.instructor.management.quiz.request.CreateQuizRequest;
 import com.portfolio.lmsbackend.service.application.staff.instructor.QuizManagementService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,10 @@ import java.util.UUID;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Tag(
+        name = "Instructor / QuizManagementController",
+        description = "Endpoints for managing quizzes"
+)
 @RestController
 @RequestMapping("/quiz/manage")
 @PreAuthorize("hasRole('INSTRUCTOR')")
@@ -26,6 +32,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class QuizManagementController {
     private final QuizManagementService quizManagementService;
 
+    @Operation(
+            summary = "Create quiz",
+            description = "Endpoint to create a new quiz."
+    )
     @PostMapping
     public ResponseEntity<String> create(
             @CurrentSecurityContext(expression = "authentication.name") String userId,

@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Configuration;
 @OpenAPIDefinition(
         info = @Info(
                 title = "LmsApp API",
-                version = "1.0.0"
+                version = "1.0.0",
+                description = "This API exposes endpoints for managing the entire learning process, " +
+                        "including user registration, course creation, quiz building, and test participation."
         )
 )
 @SecurityScheme(

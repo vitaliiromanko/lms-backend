@@ -5,7 +5,9 @@ import com.portfolio.lmsbackend.dto.staff.admin.management.category.request.Upda
 import com.portfolio.lmsbackend.dto.staff.admin.management.category.response.GetAdminCategoryResponse;
 import com.portfolio.lmsbackend.dto.staff.admin.management.category.response.GetAdminCategorySummaryResponse;
 import com.portfolio.lmsbackend.service.application.staff.admin.CategoryManagementService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,10 @@ import java.util.UUID;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Tag(
+        name = "Administrator / CategoryManagementController",
+        description = "Endpoints for managing categories"
+)
 @RestController
 @RequestMapping("/category/manage")
 @PreAuthorize("hasRole('ADMINISTRATOR')")
@@ -26,6 +32,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class CategoryManagementController {
     private final CategoryManagementService categoryManagementService;
 
+    @Operation(
+            summary = "Create category",
+            description = "Endpoint to create a new category."
+    )
     @PostMapping
     public ResponseEntity<String> create(
             @Valid @RequestBody CreateAdminCategoryRequest createAdminCategoryRequest
@@ -34,11 +44,19 @@ public class CategoryManagementController {
         return ResponseEntity.status(CREATED).body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Get all categories information",
+            description = "Endpoint to retrieve information about all existing categories."
+    )
     @GetMapping
     public ResponseEntity<List<GetAdminCategorySummaryResponse>> getAll() {
         return ResponseEntity.ok().body(categoryManagementService.getAll());
     }
 
+    @Operation(
+            summary = "Get category information",
+            description = "Endpoint to retrieve information about a category."
+    )
     @GetMapping("/{categoryId}")
     public ResponseEntity<GetAdminCategoryResponse> getOne(
             @PathVariable UUID categoryId
@@ -46,6 +64,10 @@ public class CategoryManagementController {
         return ResponseEntity.ok().body(categoryManagementService.getOne(categoryId));
     }
 
+    @Operation(
+            summary = "Update category",
+            description = "Endpoint to update information about a category."
+    )
     @PutMapping
     public ResponseEntity<String> update(
             @Valid @RequestBody UpdateAdminCategoryRequest updateAdminCategoryRequest
@@ -54,6 +76,10 @@ public class CategoryManagementController {
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Delete category",
+            description = "Endpoint to delete a category."
+    )
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<String> delete(
             @PathVariable UUID categoryId

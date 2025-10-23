@@ -2,7 +2,9 @@ package com.portfolio.lmsbackend.controller.general;
 
 import com.portfolio.lmsbackend.dto.general.course.response.GetCourseResponse;
 import com.portfolio.lmsbackend.service.application.general.CourseService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -18,6 +20,10 @@ import java.util.UUID;
 
 import static com.portfolio.lmsbackend.controller.ControllerViewHelper.wrapResponseWithView;
 
+@Tag(
+        name = "General / CourseController",
+        description = "Endpoints for general operations with courses"
+)
 @RestController
 @RequestMapping("/course")
 @RequiredArgsConstructor
@@ -25,6 +31,10 @@ import static com.portfolio.lmsbackend.controller.ControllerViewHelper.wrapRespo
 public class CourseController {
     private final CourseService courseService;
 
+    @Operation(
+            summary = "Get course information",
+            description = "Endpoint to retrieve information about a course."
+    )
     @GetMapping("/{courseId}")
     @PreAuthorize("@courseSecurity.canAccess(#authentication, #courseId)")
     public ResponseEntity<MappingJacksonValue> getCourse(

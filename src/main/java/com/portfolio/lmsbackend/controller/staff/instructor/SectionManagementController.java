@@ -5,7 +5,9 @@ import com.portfolio.lmsbackend.dto.staff.instructor.management.section.request.
 import com.portfolio.lmsbackend.dto.staff.instructor.management.section.request.UpdateSectionRequest;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.section.request.UpdateSectionStatusRequest;
 import com.portfolio.lmsbackend.service.application.staff.instructor.SectionManagementService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,10 @@ import java.util.UUID;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Tag(
+        name = "Instructor / SectionManagementController",
+        description = "Endpoints for managing sections"
+)
 @RestController
 @RequestMapping("/section/manage")
 @PreAuthorize("hasRole('INSTRUCTOR')")
@@ -25,6 +31,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class SectionManagementController {
     private final SectionManagementService sectionManagementService;
 
+    @Operation(
+            summary = "Create section",
+            description = "Endpoint to create a new section."
+    )
     @PostMapping
     public ResponseEntity<String> create(
             @Valid @RequestBody CreateSectionRequest createSectionRequest
@@ -33,6 +43,10 @@ public class SectionManagementController {
         return ResponseEntity.status(CREATED).body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Update section",
+            description = "Endpoint to update information about a section."
+    )
     @PutMapping
     public ResponseEntity<String> update(
             @Valid @RequestBody UpdateSectionRequest updateSectionRequest
@@ -41,6 +55,10 @@ public class SectionManagementController {
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Update section position",
+            description = "Endpoint to update section position."
+    )
     @PutMapping("/position")
     public ResponseEntity<String> updatePosition(
             @Valid @RequestBody UpdateSectionPositionRequest updateSectionPositionRequest
@@ -49,6 +67,10 @@ public class SectionManagementController {
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Update section status",
+            description = "Endpoint to update section status."
+    )
     @PutMapping("/status")
     public ResponseEntity<String> updateStatus(
             @Valid @RequestBody UpdateSectionStatusRequest updateSectionStatusRequest
@@ -57,6 +79,10 @@ public class SectionManagementController {
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Delete section",
+            description = "Endpoint to delete a section."
+    )
     @DeleteMapping("/{sectionId}")
     public ResponseEntity<String> delete(
             @PathVariable UUID sectionId

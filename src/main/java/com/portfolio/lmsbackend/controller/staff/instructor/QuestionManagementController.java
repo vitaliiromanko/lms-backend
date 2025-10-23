@@ -3,7 +3,9 @@ package com.portfolio.lmsbackend.controller.staff.instructor;
 import com.portfolio.lmsbackend.dto.staff.instructor.management.question.request.CreateQuestionRequest;
 import com.portfolio.lmsbackend.service.application.staff.instructor.QuestionManagementService;
 import com.portfolio.lmsbackend.validation.annotation.ValidImage;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +24,10 @@ import java.util.UUID;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Tag(
+        name = "Instructor / QuestionManagementController",
+        description = "Endpoints for managing questions"
+)
 @Validated
 @RestController
 @RequestMapping("/question/manage")
@@ -31,6 +37,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class QuestionManagementController {
     private final QuestionManagementService questionManagementService;
 
+    @Operation(
+            summary = "Create question",
+            description = "Endpoint to create a new question."
+    )
     @PostMapping
     public ResponseEntity<String> create(
             @CurrentSecurityContext(expression = "authentication.name") String userId,

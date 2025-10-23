@@ -2,7 +2,9 @@ package com.portfolio.lmsbackend.controller.general;
 
 import com.portfolio.lmsbackend.dto.general.sectioncontent.response.GetSectionContentResponse;
 import com.portfolio.lmsbackend.service.application.general.SectionContentService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJacksonValue;
@@ -18,6 +20,10 @@ import java.util.UUID;
 
 import static com.portfolio.lmsbackend.controller.ControllerViewHelper.wrapResponseWithView;
 
+@Tag(
+        name = "General / SectionContentController",
+        description = "Endpoints for general operations with section contents"
+)
 @RestController
 @RequestMapping("/section/content")
 @RequiredArgsConstructor
@@ -25,6 +31,10 @@ import static com.portfolio.lmsbackend.controller.ControllerViewHelper.wrapRespo
 public class SectionContentController {
     private final SectionContentService sectionContentService;
 
+    @Operation(
+            summary = "Get section content information",
+            description = "Endpoint to retrieve information about a section content."
+    )
     @GetMapping("/{sectionContentId}")
     @PreAuthorize("@sectionContentSecurity.canAccess(#authentication, #sectionContentId)")
     public ResponseEntity<MappingJacksonValue> getSectionContent(

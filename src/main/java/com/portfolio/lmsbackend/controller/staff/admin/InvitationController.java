@@ -2,7 +2,9 @@ package com.portfolio.lmsbackend.controller.staff.admin;
 
 import com.portfolio.lmsbackend.dto.staff.admin.invitation.request.StaffInvitationRequest;
 import com.portfolio.lmsbackend.service.application.staff.admin.InvitationService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +22,10 @@ import static com.portfolio.lmsbackend.utils.StringsHelper.ORIGIN_HEADER;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Tag(
+        name = "Administrator / InvitationController",
+        description = "Endpoints for managing system invitations"
+)
 @RestController
 @RequestMapping("/invite")
 @PreAuthorize("hasRole('ADMINISTRATOR')")
@@ -28,6 +34,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class InvitationController {
     private final InvitationService invitationService;
 
+    @Operation(
+            summary = "Send staff invitation",
+            description = "Endpoint to send an invitation to a staff member via email."
+    )
     @PostMapping("/staff")
     public ResponseEntity<String> inviteStaff(
             @CurrentSecurityContext(expression = "authentication.name") String userId,

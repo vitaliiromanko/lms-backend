@@ -8,7 +8,9 @@ import com.portfolio.lmsbackend.dto.general.attempt.response.GetAttemptAnswerRes
 import com.portfolio.lmsbackend.dto.general.attempt.response.GetAttemptResponse;
 import com.portfolio.lmsbackend.dto.general.attempt.response.StartAttemptResponse;
 import com.portfolio.lmsbackend.service.application.general.AttemptService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,10 @@ import java.util.UUID;
 import static com.portfolio.lmsbackend.utils.StringsHelper.SUCCESS_MESSAGE;
 import static org.springframework.http.HttpStatus.CREATED;
 
+@Tag(
+        name = "General / AttemptController",
+        description = "Endpoints for participating in quiz attempts"
+)
 @Validated
 @RestController
 @RequestMapping("/attempt")
@@ -32,6 +38,10 @@ import static org.springframework.http.HttpStatus.CREATED;
 public class AttemptController {
     private final AttemptService attemptService;
 
+    @Operation(
+            summary = "Start attempt",
+            description = "Endpoint to start an attempt for a specific quiz group."
+    )
     @PostMapping
     @PreAuthorize("@attemptSecurity.canStartAttempt(#authentication, #startAttemptRequest)")
     public ResponseEntity<StartAttemptResponse> startAttempt(
@@ -42,6 +52,10 @@ public class AttemptController {
                 UUID.fromString(authentication.getName()), startAttemptRequest));
     }
 
+    @Operation(
+            summary = "Get attempt information",
+            description = "Endpoint to retrieve general information about a started or already graded attempt."
+    )
     @GetMapping("/{attemptId}/answer/{answerPosition}/full")
     @PreAuthorize("@attemptSecurity.canGetAttempt(authentication, #attemptId)")
     public ResponseEntity<GetAttemptResponse> getAttempt(
@@ -51,6 +65,10 @@ public class AttemptController {
         return ResponseEntity.ok().body(attemptService.getAttempt(attemptId, answerPosition));
     }
 
+    @Operation(
+            summary = "Get attempt's answer information",
+            description = "Endpoint to retrieve information about a started or already graded attempt's answer."
+    )
     @GetMapping("/{attemptId}/answer/{answerPosition}")
     @PreAuthorize("@attemptSecurity.canGetAttemptAnswer(authentication, #attemptId)")
     public ResponseEntity<GetAttemptAnswerResponse> getAttemptAnswer(
@@ -60,6 +78,10 @@ public class AttemptController {
         return ResponseEntity.ok().body(attemptService.getAttemptAnswer(attemptId, answerPosition));
     }
 
+    @Operation(
+            summary = "Submit answer",
+            description = "Endpoint to submit an answer to a question."
+    )
     @PutMapping("/answer/submit")
     @PreAuthorize("@attemptSecurity.canSubmitAnswer(authentication, #submitAnswerRequest)")
     public ResponseEntity<String> submitAnswer(
@@ -69,6 +91,10 @@ public class AttemptController {
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Reset answer",
+            description = "Endpoint to reset an answer to a question."
+    )
     @PutMapping("/answer/reset")
     @PreAuthorize("@attemptSecurity.canResetAnswer(authentication, #resetAnswerRequest)")
     public ResponseEntity<String> resetAnswer(
@@ -78,6 +104,10 @@ public class AttemptController {
         return ResponseEntity.ok().body(SUCCESS_MESSAGE);
     }
 
+    @Operation(
+            summary = "Finish attempt",
+            description = "Endpoint to finish a started attempt."
+    )
     @PutMapping("/finish")
     @PreAuthorize("@attemptSecurity.canFinishAttempt(authentication, #finishAttemptRequest)")
     public ResponseEntity<String> finishAttempt(
