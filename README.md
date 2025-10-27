@@ -38,8 +38,7 @@ The project is built with **Spring Boot 3.5**, **Java 21**, **MySQL**, **Cloudin
 
     **API URL**: `http://localhost:8080/api/v1`
 
-    > [!NOTE]
-    > The following features are enabled **only in the `dev` profile**:
+    > **NOTE**: The following features are enabled **only in the `dev` profile**:
     > * **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui/index.html`
     > * **Automatic creation of database tables**
     > * **Test admin user**:
